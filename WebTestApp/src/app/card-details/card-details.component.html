@@ -1,7 +1,69 @@
-<p>card-details works!</p>
 
-<ul>
-    <li *ngFor="let c of cards"> 
-      {{ c.nativeExpression }}
-    </li>
-   </ul>
+<p>card details</p>
+<div class="bodylike">
+
+    
+    
+    <div class="main">
+        <div class="metaContainer">
+            <div class="container">
+                <div class="card">   
+                    <div class="cardContainer">
+                        <a href="#" title="Previous" class="arrow prev nextBtn" onclick="previousCard()"> </a>
+                        
+                        <div class="mainExpression">
+                            <h1 class="word frontCard">drzewo</h1>
+                        </div>
+                        <a href="#" title="Next" class="arrow next nextBtn" onclick="nextCard()"></a>
+                        
+                    </div>
+                    <div class="cardContainerReverse">
+                        <i class="fa fa-angle-left nextBtn"  style="font-size:60px;color:#E5FCC2" onclick="previousCard()"></i>
+                        <div class="mainExpression">
+                            <h1 class="word backCard">a tree</h1>
+                        </div>
+                        <i class="fa fa-angle-right nextBtn"  style="font-size:60px;color:#E5FCC2" onclick="nextCard()"></i>
+                        
+                    </div>
+                    
+                </div>
+                
+    
+           </div> 
+           <div class="iconsContainer">
+                <div class='icon notesBtn'>
+                    <i class="fa fa-sticky-note " style="font-size:18px;color:#E5FCC2" aria-hidden="true" onclick="showAndHideCardDescription()"> Notatki </i>
+                </div>
+                <div class='icon soundBtn'>
+                    <i class='fas fa-volume-up ' style="font-size:18px;color:#E5FCC2"> Wymowa </i>
+                </div>
+                
+                <div class='icon'>
+                    Język: 
+                    <img class="countryFlag" src="" style="height:13">
+                </div>
+                <div class='icon'>
+                    <i class="fas fa-clone counterIcon" style="font-size:18px;color:#E5FCC2"> 1/20</i>
+                </div>
+        
+            </div>    
+        </div>
+        
+        <div class="cardDescription">
+            <div class='description'>
+                description
+            </div>
+            <div class='examples'>
+                examples
+            </div>
+            <div class="additionalContent">
+
+                <h1 >some additional content</h1>
+            </div>
+        </div>
+        
+            
+        </div>
+
+    
+      </div>

@@ -1,0 +1,276 @@
+.bodylike {
+    height: 101%;
+    background-image: linear-gradient(  #E5FCC2, #9DE0AD, #45ADA8, #547980, #594F4F, #594F4F, #594F4F);
+    overflow: hidden;
+}
+
+.metaContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+}
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    perspective: 600px;
+    
+}
+.card{
+    display: flex;
+    height: 350px;
+    width: 700px;
+    background-color: #594F4F;
+    margin: auto;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 2px solid #547980 ;
+    z-index: 1;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    
+}
+
+.cardContainerReverse {
+    transform: rotateX(180deg);
+  }
+
+.card.is-flipped {
+    transform: rotateX(180deg);
+}
+
+.cardContainer, .cardContainerReverse {
+    position: absolute;
+    display: flex;
+    background-color: #594F4F;
+    
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    align-items: center;
+    justify-content:space-around;
+    z-index: 1;   
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.cardDescription {
+    display: none;
+    position: relative;
+    top: -55px;
+    height: 0px;
+    width: 700px;
+    background-color: #736c6c;
+    margin: auto;
+    border-radius: 0 0 25px 25px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    z-index: -1;
+}
+
+.showCardDescription {
+    display: flex;
+    animation-name: uncoverDesc;
+    animation-duration: 0.5s;
+    top: -55px;
+    height: 350px;
+}
+
+.hideCardDescription {
+    
+    animation-name: coverDesc;
+    animation-duration: 0.25s;
+    top: -55px;
+    height: 0px;
+    opacity:0;
+    transition:visibility 0.3s linear,opacity 0.3s linear;
+}
+.hideCardDescription > * {
+    visibility:hidden;
+    opacity:0;
+    transition:visibility 0.3s linear,opacity 0.3s linear;
+}
+@keyframes uncoverDesc {
+    0% {    
+        top: -55px;
+        height: 0px;
+    }
+    100% {    
+        top: -55px;
+        height: 350px;
+    }
+}
+
+@keyframes coverDesc {
+    0% {    
+        display: flex;
+        top: -55px;
+        height: 350px;
+    }
+    100% {    
+        top: -80px;
+        height: 50px;   
+        display: none;
+        
+    }
+}
+
+.mainExpression {
+    color: white;
+    width: 70%;
+}
+
+.word {
+    text-align: center;
+}
+.additionalContent {
+    color: white;
+    z-index: -1;
+}
+.notesBtn, .soundBtn {
+    cursor: pointer;
+    
+}
+
+.icon {
+    font-weight: bold;
+    font-family: 'Times New Roman';
+    font-style: normal;
+    font-size:18px;
+    color:#E5FCC2
+}
+
+.previous {
+    position: relative;
+    height: 20px;
+    width: 40px;
+}
+
+.iconsContainer {
+    display: flex;
+    justify-content:space-around;
+
+    width: 700px;
+}
+.next {
+
+    font-size: 50px;
+}
+
+.runNextCard {
+    animation:  animateNextCardToRight 0.1s ease-out, animateNextCardFromLeft 0.1s 0.1s ease-out;
+
+}
+
+.runPreviousCard {
+    animation:  animateNextCardToLeft 0.1s ease-out, animateNextCardFromRight 0.1s 0.1s ease-out;
+
+}
+
+.disappearTerm {
+    animation: disappearTermAnimation 1s ease-out;
+}
+@keyframes disappearTermAnimation {
+    0% {    
+        opacity: 0;
+    }
+    100% {    
+        opacity: 1;
+    }
+}
+@keyframes animateNextCardToRight {
+    0% {    
+        left: 0px;
+    }
+    100% {    
+        left: 10%;
+        opacity: 0;
+    }
+}
+@keyframes animateNextCardToLeft {
+    0% {    
+        left: 0px;
+    }
+    100% {    
+        left: -10%;
+        opacity: 0;
+    }
+}
+@keyframes animateNextCardFromLeft {
+    0% {    
+        left: -10%;
+        opacity: 0;
+    }
+    100% {    
+        left: 0px;
+        opacity: 1;
+    }
+}
+@keyframes animateNextCardFromRight {
+    0% {    
+        left: 10%;
+        opacity: 0;
+    }
+    100% {    
+        left: 0px;
+        opacity: 1;
+    }
+}
+
+.description {
+    width: 80%;
+    height: 50px;
+    border-bottom: 1px solid #E5FCC2;
+    color: #E5FCC2;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 18px;
+}
+
+
+
+.arrow {
+    display: inline-block;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    text-indent: -9999px;
+    border-top: 2px solid #E5FCC2;
+    border-left: 2px solid #E5FCC2;
+    transition: all 250ms ease-in-out;
+    text-decoration: none;
+    color: transparent;
+    margin: 5%;
+  }
+  
+  .arrow:hover {
+
+    border-width: 5px;
+  }
+  
+  .arrow:before {
+    display: block;
+    height: 200%;
+    width: 200%;
+    margin-left: -50%;
+    margin-top: -50%;
+    content: "";
+    transform: rotate(45deg);
+  }
+  
+  .arrow.prev {
+    transform: rotate(-45deg);
+    left: 0;
+  }
+  
+  .arrow.next {
+    transform: rotate(135deg);
+    right: 0;
+  }
