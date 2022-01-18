@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
+import {MatIconModule} from '@angular/material/icon';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'card-slider-component',
@@ -61,7 +63,7 @@ export class CardSliderComponent implements OnInit {
     this.counter.innerHTML = this.number + 1 + "/" + this.quantity;
     this.description.innerHTML = this.actualCard["description"];
     this.setExamples();
-    this.countryFlag.src = this.getCountryCode(this.actualCard["nativeExpression"]);
+    this.countryFlag.src = this.getCountryCode(this.actualCard["nativeLang"]);
 
     let self = this;
     this.card.onclick = function(e) { 
@@ -110,7 +112,7 @@ setExamples(){
 }
 
 getCountryCode(countryName: string) {
-  return 'https://lipis.github.io/flag-icon-css/flags/4x3/'+countryName+'.svg';
+  return 'assets/4x3/'+countryName+'.svg';
 }
 
 updateCard(){
@@ -148,7 +150,7 @@ hideCardDescription(){
 }
 
 nextCard(){
-  if(this.number == this.quantity){
+  if(this.number == this.quantity-1){
       this.number = 0;
   }
   else {
