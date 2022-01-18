@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CardDetailsComponent } from './card-details/card-details.component';
+import { CardSliderComponent } from './card-slider/card-slider.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardDetailsComponent
+    CardSliderComponent
   ],
   imports: [
     BrowserModule,

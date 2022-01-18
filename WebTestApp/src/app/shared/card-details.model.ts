@@ -1,9 +1,8 @@
 export interface CardDetails{
-    cardDetailsID: number;
     nativeExpression: string;
     foreignExpression: string;
-    nativeLang: number;
-    foreignLang: number;
+    nativeLang: string;
+    foreignLang: string;
     description: string;
     examples: string[];
 }
