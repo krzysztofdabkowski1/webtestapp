@@ -23,7 +23,8 @@ export class CardSliderComponent implements OnInit {
   
   frontCard:HTMLDivElement = document.querySelector('.frontCard') as HTMLDivElement;
   backCard:HTMLDivElement = document.querySelector('.backCard') as HTMLDivElement;
-  counter:HTMLDivElement = document.querySelector('.counterIcon') as HTMLDivElement;
+  counter:HTMLDivElement = document.querySelector('.counter') as HTMLDivElement;
+  progress:HTMLDivElement = document.querySelector('.progress-bar') as HTMLDivElement;
   examples:HTMLDivElement = document.querySelector('.examples') as HTMLDivElement;
   description:HTMLDivElement = document.querySelector('.description') as HTMLDivElement;
   countryFlag:HTMLImageElement = document.querySelector('.countryFlag') as HTMLImageElement;
@@ -47,7 +48,8 @@ export class CardSliderComponent implements OnInit {
     
     this.frontCard = document.querySelector('.frontCard') as HTMLDivElement;
     this.backCard = document.querySelector('.backCard') as HTMLDivElement;
-    this.counter = document.querySelector('.counterIcon') as HTMLDivElement;
+    this.counter = document.querySelector('.counter') as HTMLDivElement;
+    this.progress= document.querySelector('.progress-bar') as HTMLDivElement;
     this.examples = document.querySelector('.examples') as HTMLDivElement;
     this.description = document.querySelector('.description') as HTMLDivElement;
     this.countryFlag = document.querySelector('.countryFlag') as HTMLImageElement;
@@ -122,6 +124,10 @@ updateCard(){
   this.backCard.innerHTML = this.actualCard["foreignExpression"];
 
   this.counter.innerHTML = this.number + 1 + "/" + this.quantity;
+
+  let percentage: number = ((this.number + 1)  /this.quantity) * 100;
+  this.progress.ariaValueNow = <string> <unknown> percentage ;
+  this.progress.style.width = percentage+'%';
 
   this.setExamples();
 }

@@ -1,6 +1,7 @@
 .bodylike {
-    height: 101%;
-    background-image: linear-gradient(  #E5FCC2, #9DE0AD, #45ADA8, #547980, #594F4F, #594F4F, #594F4F);
+    height: 100%;
+    /*  background-image: linear-gradient(  #E5FCC2, #9DE0AD, #45ADA8, #547980, #594F4F, #594F4F, #594F4F); */
+    background-image: linear-gradient(  #594F4F, #594F4F, #547980, #594F4F, #594F4F, #594F4F);
     overflow: hidden;
 }
 
@@ -17,10 +18,33 @@
     perspective: 600px;
     
 }
+.progress-container{
+    width: 65%;
+    margin: 1%;
+    display: flex;
+    justify-content:space-around;
+}
+
+.progress{
+    width: 90%;
+}
+
+.progress-bar{
+    position: relative;
+    display: flex;
+}
+.counter{
+    width: 10%;
+    height: 20%;
+    position: relative;
+    color: #E5FCC2;
+    padding: 0px 0px 0px 10px;
+}
+
 .card{
     display: flex;
     height: 350px;
-    width: 700px;
+    width: 65%;
     background-color: #594F4F;
     margin: auto;
     border-radius: 25px;

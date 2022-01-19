@@ -13,7 +13,7 @@ export class CardDetailsService {
 
   cards: CardDetails[] = [
     {
-      "nativeExpression": "rzeka",
+      "nativeExpression": "rzeka konstantynopolitańczykowianeczka",
       "foreignExpression": "a river",
       "nativeLang": "pl",
       "foreignLang": "gb",
