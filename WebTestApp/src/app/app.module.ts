@@ -7,17 +7,24 @@ import { CardSliderComponent } from './card-slider/card-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/modules/material/material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditDescriptionComponent } from './edit-description/edit-description.component';
+import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
+import { EditExamplesComponent } from './edit-examples/edit-examples.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CardSliderComponent
+    CardSliderComponent,
+    EditDescriptionComponent,
+    EditExamplesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    NgbModule
+    NgbModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

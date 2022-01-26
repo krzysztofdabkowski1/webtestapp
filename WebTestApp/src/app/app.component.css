@@ -1,0 +1,28 @@
+.global-background {
+    /*  background-image: linear-gradient(  #E5FCC2, #9DE0AD, #45ADA8, #547980, #594F4F, #594F4F, #594F4F); */
+    background-color: #171917;
+    height: 100%;
+    overflow-x:hidden;
+    z-index: 1;
+}
+
+.blobdiv1{
+    background-image:  url('/assets/blob.svg');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.65;
+    width: 95%;
+    height: 100%;
+    position: fixed;
+}
+.blobdiv2{
+    background-image:  url('/assets/blob2.svg');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.65;
+    width: 95%;
+    height: 100%;
+    position: fixed;
+}

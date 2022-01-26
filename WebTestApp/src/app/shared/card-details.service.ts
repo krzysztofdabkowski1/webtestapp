@@ -13,6 +13,7 @@ export class CardDetailsService {
 
   cards: CardDetails[] = [
     {
+      "id": 1,
       "nativeExpression": "rzeka konstantynopolitańczykowianeczka",
       "foreignExpression": "a river",
       "nativeLang": "pl",
@@ -26,6 +27,7 @@ export class CardDetailsService {
   
     },
     {
+      "id": 2,
       "nativeExpression": "drzewo",
       "foreignExpression": "a tree",
       "nativeLang": "pl",
@@ -38,6 +40,7 @@ export class CardDetailsService {
       ]
     },
     {
+      "id": 3,
       "nativeExpression": "rodzina",
       "foreignExpression": "something special",
       "nativeLang": "pl",
@@ -62,4 +65,16 @@ export class CardDetailsService {
     const CARDS = this.cards;
     return of(CARDS);
   }
+
+  getCardById(id: number): CardDetails{
+    return this.cards.filter( c => c.id == id)[0];
+  }
+
+  setCardsDescriptionById(id: number, description: string){
+    let obj: CardDetails = this.cards.find( c => c.id == id) as CardDetails;
+    let index = this.cards.indexOf(obj);
+    this.cards[index].description = description;
+  }
+
+  
 }

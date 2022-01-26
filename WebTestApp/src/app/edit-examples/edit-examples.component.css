@@ -1,0 +1,36 @@
+.examplesContent {
+    margin-top: 2px;
+    padding: 15px;
+    background: rgba( 56, 56, 56, 0.65 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
+    border-radius: 10px;
+
+    border-radius: 0 0 10px 10px;
+    z-index: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+}
+.content{
+    background-color:rgba(0, 0, 0, 0.1);
+    border: solid 0.25px white;
+    width: 100%;
+    color: white;
+    resize: none;
+    
+}
+
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn{
+    margin-top: 5px;
+}

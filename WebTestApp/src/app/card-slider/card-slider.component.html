@@ -1,18 +1,22 @@
 
-<div class="bodylike">
  
-    <div class="main">
+    <!--
+        <img class="blob" src="assets/blob.svg" alt="">
+    <img class="blob" src="assets/blob2.svg" alt="">
+    -->
+
         <div class="metaContainer">
-            <div class="container">
-                <div class="progress-container">
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class='counter'>
-                            1/20
-                    </div>
+
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                
+                <div class='counter'>
+                        1/20
+                </div>
+            </div>
+            
+            <div class="container">
                 <div class="card">   
                     <div class="cardContainer">
                         <a href="#" title="Previous" class="arrow prev nextBtn" (click)="previousCard()"> </a>
@@ -22,6 +26,21 @@
                         </div>
                         <a href="#" title="Next" class="arrow next nextBtn" (click)="nextCard()"></a>
                         
+                        <div class="iconsContainer">
+            
+                            <div class='icon notesBtn'>
+                                <i class="gg-notes" style="color: #E5FCC2" (click)="showAndHideCardDescription()"></i>
+                                
+                            </div>
+                            <div class='icon soundBtn'>
+                                <mat-icon>volume_up</mat-icon>
+                            </div>
+                            
+                            <div class='icon'>
+                                <img class="countryFlag" src="" style="height:20px; width: 25px;">
+                            </div>
+                    
+                        </div> 
                     </div>
                     <div class="cardContainerReverse">
                         <i class="arrow prev nextBtn"  style="font-size:60px;color:#E5FCC2" (click)="previousCard()"></i>
@@ -29,45 +48,61 @@
                             <h1 class="word backCard">a tree</h1>
                         </div>
                         <i class="arrow next nextBtn"  style="font-size:60px;color:#E5FCC2" (click)="nextCard()"></i>
-                        
+                        <div class="iconsContainer">
+            
+                            <div class='icon notesBtn'>
+                                <i class="gg-notes" style="color: #E5FCC2" (click)="showAndHideCardDescription()"></i>
+                                
+                            </div>
+                            <div class='icon soundBtn'>
+                                <mat-icon>volume_up</mat-icon>
+                            </div>
+                            
+                            <div class='icon'>
+                                <img class="countryFlagForeign" src="" style="height:20px; width: 25px;">
+                            </div>
+                    
+                        </div>
                     </div>
                     
                 </div>
                 
                 
+
            </div> 
-           <div class="iconsContainer">
-            
-                <div class='icon notesBtn'>
-                    <i class="gg-notes" style="color: white" (click)="showAndHideCardDescription()"></i>
-                    
-                </div>
-                <div class='icon soundBtn'>
-                    <mat-icon>volume_up</mat-icon>
-                </div>
-                
-                <div class='icon'>
-                    <img class="countryFlag" src="" style="height:20px; width: 25px;">
-                </div>
-        
-            </div>    
+   
         </div>
         
         <div class="cardDescription">
             <div class='description'>
-                description
+                <div class="descriptionHead">
+                    <p>Opis</p> 
+                    
+                    <mat-icon class="editBtn" (click)="editDescription()">edit</mat-icon>
+                    
+                    
+                </div>
+                <div *ngIf="activeEditDescription; elseDescription">
+                    <edit-description [cardId]="actualCard['id']" (activeEditDescriptionOutput)="getEditDescriptionStatus($event)"></edit-description>
+                </div>
+                <div #elseDescription class="descriptionContent">
+                    
+                        description
+                </div>
+                
+                
             </div>
             <div class='examples'>
-                examples
-            </div>
-            <div class="additionalContent">
-
-                <h1 >some additional content</h1>
+                <div class="examplesHead">
+                    <p>Przykłady</p> 
+                    <mat-icon class="edit">edit</mat-icon>
+                </div>
+                <div class="examplesContent">
+                    examples
+                </div>
             </div>
         </div>
         
             
-        </div>
+        
 
-    
-      </div>

@@ -1,4 +1,5 @@
 export interface CardDetails{
+    id: number;
     nativeExpression: string;
     foreignExpression: string;
     nativeLang: string;
