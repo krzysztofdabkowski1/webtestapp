@@ -2,11 +2,10 @@
     margin-top: 2px;
     padding: 15px;
     background: rgba( 56, 56, 56, 0.65 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 4.5px );
     -webkit-backdrop-filter: blur( 4.5px );
     border-radius: 10px;
-
+    box-shadow: 5px 5px rgba( 31, 38, 135, 0.37 );
     border-radius: 0 0 10px 10px;
     z-index: 0;
 }

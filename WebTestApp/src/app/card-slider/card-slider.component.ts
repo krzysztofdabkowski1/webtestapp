@@ -14,11 +14,13 @@ export class CardSliderComponent implements OnInit {
    cards!:CardDetails[];  
    cardID:number = 0;
    activeEditDescription: boolean = false;
+   activeEditExamples: boolean = false;
    quantity!: number;
    number!: number;
    clickedNextCard!: boolean;
    isFront!: boolean;
-   isNotesOn!:boolean;
+   areNotesOn!:boolean;
+   isSoundOn!: boolean;
    actualCard!: CardDetails
   
 
@@ -34,12 +36,13 @@ export class CardSliderComponent implements OnInit {
   countryFlag:HTMLImageElement = document.querySelector('.countryFlag') as HTMLImageElement;
   countryFlagForeign:HTMLImageElement = document.querySelector('.countryFlagForeign') as HTMLImageElement;
   card:HTMLDivElement = document.querySelector('.card') as HTMLDivElement;
-  sound:HTMLButtonElement = document.querySelector('.soundBtn') as HTMLButtonElement;
+  sound:HTMLButtonElement[] = document.querySelectorAll('.soundBtn') as unknown as HTMLButtonElement[];
   word:HTMLButtonElement []= document.querySelectorAll('.word') as unknown as HTMLButtonElement[];
   iconsContainer:HTMLDivElement = document.querySelector('.iconsContainer') as HTMLDivElement;
   cardContainer:HTMLDivElement = document.querySelector('.cardContainer') as HTMLDivElement;
   cardContainerReverse:HTMLDivElement = document.querySelector('.cardContainerReverse') as HTMLDivElement;
   container:HTMLDivElement = document.querySelector('.container') as HTMLDivElement;
+  
   
 
   constructor(private dataService: CardDetailsService) { }
@@ -54,7 +57,8 @@ export class CardSliderComponent implements OnInit {
     this.number = 0;
     this.clickedNextCard = false;
     this.isFront = true;
-    this.isNotesOn = false;
+    this.areNotesOn = false;
+    this.isSoundOn = false;
     this.actualCard = this.cards[0];
     
     this.frontCard = document.querySelector('.frontCard') as HTMLDivElement;
@@ -66,7 +70,7 @@ export class CardSliderComponent implements OnInit {
     this.countryFlag = document.querySelector('.countryFlag') as HTMLImageElement;
     this.countryFlagForeign = document.querySelector('.countryFlagForeign') as HTMLImageElement;
     this.card = document.querySelector('.card') as HTMLDivElement;
-    this.sound = document.querySelector('.soundBtn') as HTMLButtonElement;
+    this.sound = document.querySelectorAll('.soundBtn') as unknown as HTMLButtonElement[];
     this.word = document.querySelectorAll('.word') as unknown as HTMLButtonElement[];
     this.iconsContainer= document.querySelector('.iconsContainer') as HTMLDivElement;
     this.cardContainer = document.querySelector('.cardContainer') as HTMLDivElement;
@@ -81,20 +85,19 @@ export class CardSliderComponent implements OnInit {
     this.backCard.innerHTML = this.actualCard["foreignExpression"];
     this.counter.innerHTML = this.number + 1 + "/" + this.quantity;
     this.description.innerHTML = this.actualCard["description"];
-    this.setExamples();
+    //this.setExamples();
     this.countryFlag.src = this.getCountryCode(this.actualCard["nativeLang"]);
     this.countryFlagForeign.src = this.getCountryCode(this.actualCard["foreignLang"]);
 
     let self = this;
     this.card.onclick = function(e) { 
-      console.log('start'+self.card.classList.contains('is-flipped'));
       
       if(self.clickedNextCard ) {
            
           self.clickedNextCard = false;
       }
       else{
-        if(!self.isNotesOn ){
+        if(!self.areNotesOn && !self.isSoundOn){
           self.card.classList.toggle('is-flipped');
         }
            
@@ -107,17 +110,6 @@ export class CardSliderComponent implements OnInit {
             self.cardContainerReverse.style.display='flex';
           },150);
           
-          //self.countryFlag.src = self.getCountryCode(self.actualCard["foreignLang"]);
-          if(self.iconsContainer.classList.contains('disappearIcons')){
-            //self.iconsContainer.classList.toggle('appearIcons');
-            //self.frontCard.classList.toggle('appearIcons');
-          }
-          else{
-            //self.iconsContainer.classList.toggle('disappearIcons');
-            //self.frontCard.classList.toggle('disappearIcons');
-          }
-          //self.cardContainer.style.backfaceVisibility='hidden';
-          //self.cardContainerReverse.style.backfaceVisibility='visible';
           
       }
       else{
@@ -127,27 +119,30 @@ export class CardSliderComponent implements OnInit {
         },150);
         
           self.isFront = true;
-          //self.countryFlag.src = self.getCountryCode(self.actualCard["nativeLang"]);
-          //self.iconsContainer.classList.toggle('appearIcons');
-          //self.frontCard.classList.toggle('appearIcons');
-          //self.cardContainer.style.backfaceVisibility='visible';
-          //self.cardContainerReverse.style.backfaceVisibility='hidden';
+
       }
-      console.log('end'+self.card.classList.contains('is-flipped'));
     };
 
-    this.sound.addEventListener( 'click', function(e) { 
-      let speech = new SpeechSynthesisUtterance();
-      if(self.isFront){
-          speech.lang = self.actualCard["nativeLang"];
-          speech.text = self.actualCard["nativeExpression"];
-      }
-      else{
-          speech.lang = self.actualCard["foreignLang"];
-          speech.text = self.actualCard["foreignExpression"];    
-      }
+    
+    this.sound.forEach(s => {    
+      s.addEventListener( 'click', function(e) { 
 
-      window.speechSynthesis.speak(speech);
+        let speech = new SpeechSynthesisUtterance();
+        if(self.isFront){
+            speech.lang = self.actualCard["nativeLang"];
+            speech.text = self.actualCard["nativeExpression"];
+        }
+        else{
+            speech.lang = self.actualCard["foreignLang"];
+            speech.text = self.actualCard["foreignExpression"];    
+        }
+
+        self.isSoundOn = true;
+        window.speechSynthesis.speak(speech);
+        setTimeout(()=>{
+          self.isSoundOn = false;
+        });
+      })
     });
 
     this.word.forEach( w => {
@@ -163,6 +158,11 @@ export class CardSliderComponent implements OnInit {
         }
   
         window.speechSynthesis.speak(speech);
+        self.isSoundOn = true;
+        window.speechSynthesis.speak(speech);
+        setTimeout(()=>{
+          self.isSoundOn = false;
+        });
       });
     });
     
@@ -198,7 +198,7 @@ updateCard(){
   this.progress.style.width = percentage+'%';
 
   this.description.innerHTML = this.actualCard["description"];
-  this.setExamples();
+  //this.setExamples();
 }
 
 
@@ -211,17 +211,17 @@ showAndHideCardDescription(){
   }
   else{
       cardDesc.classList.toggle('hideCardDescription'); 
-      this.isNotesOn = false;
+      this.areNotesOn = false;
   }
-  this.isNotesOn = true;
+  this.areNotesOn = true;
   setTimeout( ()=>{
-    this.isNotesOn = false;
+    this.areNotesOn = false;
   }, 100);
 }
 
 
 hideCardDescription(){
-  this.isNotesOn = false;
+  this.areNotesOn = false;
   const cardDesc:HTMLDivElement = document.querySelector('.cardDescription') as HTMLDivElement;
   if( cardDesc.classList.contains('showCardDescription')){
       cardDesc.classList.toggle('showCardDescription');
@@ -243,16 +243,11 @@ nextCard(){
   if(this.card.classList.contains('is-flipped')){
       this.card.classList.toggle('is-flipped');
   }
-  //this.frontCard.classList.toggle('disappearTerm');
-  //this.backCard.classList.toggle('disappearTerm');
   const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement;
   this.hideCardDescription();
   container.classList.toggle('runNextCard');
   setTimeout(()=>{
-      //const container = document.querySelector('.container');
       container.classList.toggle('runNextCard');
-      //this.frontCard.classList.toggle('disappearTerm');
-      //this.backCard.classList.toggle('disappearTerm');
   }, 200);
 
 }
@@ -287,8 +282,12 @@ reloadDescription():void {
   this.description = document.querySelector('.descriptionContent') as HTMLDivElement;
 }
 editDescription():void {
-  this.activeEditDescription = true;
+  this.activeEditDescription = !this.activeEditDescription;
   this.description.style.display="none";
+}
+
+editExamples(): void {
+  this.activeEditExamples = !this.activeEditExamples;
 }
 
 getEditDescriptionStatus(active: any){
@@ -297,5 +296,8 @@ getEditDescriptionStatus(active: any){
   this.updateCard();
 }
 
+getEditExamplesStatus(active: any){
+  this.activeEditExamples = active as boolean;
+}
 }
 

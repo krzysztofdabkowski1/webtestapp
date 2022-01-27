@@ -43,4 +43,9 @@ export class EditDescriptionComponent implements OnInit {
     this.descriptionForm.reset();
   }
 
+  cancel() {
+    this.activeEditDescriptionOutput.emit(false);
+    this.descriptionForm.reset();
+  }
+
 }

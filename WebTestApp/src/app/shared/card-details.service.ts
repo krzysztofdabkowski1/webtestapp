@@ -28,8 +28,8 @@ export class CardDetailsService {
     },
     {
       "id": 2,
-      "nativeExpression": "drzewo",
-      "foreignExpression": "a tree",
+      "nativeExpression": "kolejka",
+      "foreignExpression": "a queue",
       "nativeLang": "pl",
       "foreignLang": "gb",
       "description": " it is a simple word, no description needed",
@@ -76,5 +76,10 @@ export class CardDetailsService {
     this.cards[index].description = description;
   }
 
+  setCardsExamplesById(id: number, examples: string[]){
+    let obj: CardDetails = this.cards.find( c => c.id == id) as CardDetails;
+    let index = this.cards.indexOf(obj);
+    this.cards[index].examples = examples;
+  }
   
 }

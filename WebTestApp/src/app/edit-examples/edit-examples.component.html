@@ -1,12 +1,44 @@
 <div class="examplesContent">
+  <div *ngIf="activeEditExamples; elseExamples">
+    <tbody class="editList"> 
+      <ng-container *ngFor="let e of examples; let i = index">
+      <tr class="tableRow">
+        <td class="cell"> 
+          <button class="deleteBtn" (click)="deleteExample(i)">
+            <mat-icon >delete</mat-icon>
+          </button>
+          <button  class="editBtn" (click)="editExample(i)">
+            <mat-icon >edit</mat-icon>
+          </button>
+        </td>
+        <td class="cell">
+          {{e}} 
+        </td>
+      </tr>
+      </ng-container>
+    </tbody>
+  </div>
+  <div *ngIf="!activeEditExamples">
+    <li *ngFor="let e of examples">
+      <span>{{e}}</span> 
+    </li>
+  </div>
+
+  
+
+  <div *ngIf="activeEditExamples">
     <form  class="form" [formGroup]="examplesForm" (ngSubmit)="onSubmit()">
 
-        <textarea class="content" type="text" formControlName="content">
-        </textarea>
-        <div class="buttons">
-            <button class="btn btn-info" type="submit">Zapisz</button>
-        </div>
-        
+      <textarea class="content" type="text" formControlName="content">
+      </textarea>
+      <div class="buttons">
+          <button class="btn btn-info" type="submit">Zapisz</button>
+          <button class="btn btn-danger" type="button" (click)="cancel()" >Anuluj</button>
+      </div>
       
-      </form>
+    
+    </form>
+
+  </div>
+
 </div>
