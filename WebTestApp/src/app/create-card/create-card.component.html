@@ -1,0 +1,90 @@
+   <div id="data" class="create-card-container">
+
+    <form  class="form" [formGroup]="createCardForm" (ngSubmit)="ngOnSubmit()">
+        <div class="create-content"> 
+            <div class="create-card-number"> 
+                <h3>{{numberOfCard}}</h3>     
+            </div>
+            <div class="native-word">
+                <textarea id="native-textarea" class="content-input"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" autosize required>
+                </textarea>
+                <div class="linear-underline"></div>
+                <div id="native-p">
+                <p *ngIf="!nativeWord.touched || !!nativeWord.hasError('required')">wyrażenie</p>
+                <p *ngIf="nativeWord.touched && nativeWord.hasError('required')">Invalid</p>
+                </div>
+            </div>
+            <div class="foreign-word">
+                <textarea id="foreign-textarea" class="content-input"  type="text" rows="1" formControlName="foreignWord" placeholder="tłumaczenie" autosize required>
+                </textarea><div class="linear-underline"></div>
+                <p id="foreign-p" >tłumaczenie</p>
+            </div>
+            <div class="addNotes">
+                <mat-icon class="editBtn" (click)="showCardDescription()">note_add</mat-icon>
+            </div>
+        </div>
+        <div class="cardDescription">
+            <div class='description'>
+                <div class="descriptionContent">
+                        <textarea id="description-textarea" class="content-input"  type="text" formControlName="description" rows="1" placeholder="opis" autosize>
+                        </textarea>
+                        <div class="linear-underline"></div>
+                        <p id="description-p" >opis</p>
+                </div>
+            </div>
+            <div class='examples'>
+
+                <div class="examplesContent">
+                      <div class="editList"> 
+                        <ng-container *ngFor="let e of examples; let i = index">
+                        <div class="tableRow">
+                          <div *ngIf="i!=exampleIndex" class="editCell"> 
+                              <mat-icon class="iconBtn" (click)="deleteExample(i)">delete</mat-icon>
+                              <mat-icon class="iconBtn" (click)="editExample(i)">edit</mat-icon>
+                            
+                          </div>
+                          <div *ngIf="i!=exampleIndex" class="cell">
+                            {{e}} 
+                          </div>
+                          <div *ngIf="i==exampleIndex" class="cell" style="flex-direction: column;">
+                                  <textarea  id="edit-example-textarea" class="content-input" style="width:100%" type="text" rows="1" formControlName="example" placeholder="przykład" autosize>
+                                  </textarea>
+                                  <div class="linear-underline" style="width:100%;"></div>
+                                  <div class="edit-buttons">
+                                    <mat-icon class="iconBtn" (click)="saveEdit(i)">check</mat-icon>
+                                    <mat-icon class="iconBtn" (click)="cancelEdit()">cancel</mat-icon>
+                                  </div>
+                              
+                            </div>
+
+                        </div>
+                        </ng-container>
+                      </div>
+                  
+                    
+                  
+                    <div id="new-example">
+                      
+                        <textarea id="example-textarea" class="content-input" type="text" rows="1" formControlName="example" placeholder="dodaj przykład" autosize>
+                        </textarea>
+                        <div class="linear-underline"></div>
+                        <p id="example-p">przykład</p>
+                        <div class="example-buttons">
+                            <mat-icon class="iconBtn" (click)="addExample()">check</mat-icon>
+                            <mat-icon class="iconBtn" (click)="cancel()">cancel</mat-icon>
+                         </div>
+                        
+                      
+                  
+                    </div>
+                  
+                  </div>
+                
+            </div>
+        </div>
+
+
+        
+      
+      </form>
+    </div>

@@ -1,9 +1,15 @@
+<div class="examplesHead">
+    <p>Przykłady</p> 
+    <mat-icon *ngIf="!activeEditExamples" class="editBtn" (click)="editExamples($event)">edit</mat-icon>
+    <mat-icon *ngIf="activeEditExamples" class="editBtn" (click)="editExamples($event)">keyboard_arrow_up</mat-icon>
+    
+</div>
 <div class="examplesContent">
   <div *ngIf="activeEditExamples; elseExamples">
-    <tbody class="editList"> 
+    <div class="editList"> 
       <ng-container *ngFor="let e of examples; let i = index">
       <tr class="tableRow">
-        <td class="cell"> 
+        <td *ngIf="i!=exampleIndex" class="editCell"> 
           <button class="deleteBtn" (click)="deleteExample(i)">
             <mat-icon >delete</mat-icon>
           </button>
@@ -11,12 +17,26 @@
             <mat-icon >edit</mat-icon>
           </button>
         </td>
-        <td class="cell">
+        <td *ngIf="i!=exampleIndex" class="cell">
           {{e}} 
+        </td>
+        <td *ngIf="i==exampleIndex" class="cell" style="color:rgba(255, 255, 255, 0.5)">
+            <form  class="form" [formGroup]="examplesForm" (ngSubmit)="onSubmit()">
+
+                <textarea  #myTextArea class="content" type="text" formControlName="content">
+                </textarea>
+                <div class="buttons">
+                    <button class="btn btn-info" type="submit">Zapisz</button>
+                    <button class="btn btn-danger" type="button" (click)="cancelEdit()" >Anuluj</button>
+                </div>
+                
+              
+              </form>
+            
         </td>
       </tr>
       </ng-container>
-    </tbody>
+    </div>
   </div>
   <div *ngIf="!activeEditExamples">
     <li *ngFor="let e of examples">
@@ -26,13 +46,13 @@
 
   
 
-  <div *ngIf="activeEditExamples">
+  <div *ngIf="activeEditExamples==true && exampleIndex==undefined">
     <form  class="form" [formGroup]="examplesForm" (ngSubmit)="onSubmit()">
 
-      <textarea class="content" type="text" formControlName="content">
+      <textarea  #myTextArea class="content" type="text" formControlName="content">
       </textarea>
       <div class="buttons">
-          <button class="btn btn-info" type="submit">Zapisz</button>
+          <button class="btn btn-info" type="submit">Dodaj</button>
           <button class="btn btn-danger" type="button" (click)="cancel()" >Anuluj</button>
       </div>
       

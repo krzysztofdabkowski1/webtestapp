@@ -1,4 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+height: 100%;
+
+background-color: #171917;
+z-index: -1;
+}
+
+.blobdiv1{
+    background-image:  url('/assets/blob.svg');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.65;
+    width: 95%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+}
+.blobdiv2{
+    background-image:  url('/assets/blob2.svg');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.65;
+    width: 95%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+}

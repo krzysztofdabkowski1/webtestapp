@@ -1,9 +1,6 @@
 
  
-    <!--
-        <img class="blob" src="assets/blob.svg" alt="">
-    <img class="blob" src="assets/blob2.svg" alt="">
-    -->
+    
 
         <div class="metaContainer">
 
@@ -19,12 +16,12 @@
             <div class="container">
                 <div class="card">   
                     <div class="cardContainer">
-                        <a href="#" title="Previous" class="arrow prev nextBtn" (click)="previousCard()"> </a>
+                        <i title="Previous" class="arrow prev nextBtn" (click)="previousCard()"> </i>
                         
                         <div class="mainExpression">
                             <h1 class="word frontCard">drzewo</h1>
                         </div>
-                        <a href="#" title="Next" class="arrow next nextBtn" (click)="nextCard()"></a>
+                        <i title="Next" class="arrow next nextBtn" (click)="nextCard()"></i>
                         
                         <div class="iconsContainer">
             
@@ -71,39 +68,26 @@
 
            </div> 
    
-        </div>
+        
         
         <div class="cardDescription">
             <div class='description'>
-                <div class="descriptionHead">
-                    <p>Opis</p> 
-                    
-                    <mat-icon *ngIf="!activeEditDescription" class="editBtn" (click)="editDescription()">edit</mat-icon>
-                    <mat-icon *ngIf="activeEditDescription" class="editBtn" (click)="editDescription()">keyboard_arrow_up</mat-icon>
-                    
-                </div>
-                <div *ngIf="activeEditDescription">
-                    <edit-description [cardId]="actualCard['id']" (activeEditDescriptionOutput)="getEditDescriptionStatus($event)"></edit-description>
-                </div>
-                <div *ngIf="!activeEditDescription" class="descriptionContent">
-                    
-                        description
-                </div>
+                <edit-description 
+                    [cardId]="actualCard['id']">
+                </edit-description>
+                
                 
                 
             </div>
             <div class='examples'>
-                <div class="examplesHead">
-                    <p>Przykłady</p> 
-                    <mat-icon *ngIf="!activeEditExamples" class="editBtn" (click)="editExamples()">edit</mat-icon>
-                    <mat-icon *ngIf="activeEditExamples" class="editBtn" (click)="editExamples()">keyboard_arrow_up</mat-icon>
-                    
-                </div>
-                <edit-examples [cardId]="actualCard['id']" [activeEditExamples]="activeEditExamples" (activeEditExamplesOutput)="getEditExamplesStatus($event)"></edit-examples>
+
+                <edit-examples 
+                    [cardId]="actualCard['id']">
+                </edit-examples>
                 
             </div>
         </div>
         
-            
+    </div>            
         
 

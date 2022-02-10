@@ -10,12 +10,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditDescriptionComponent } from './edit-description/edit-description.component';
 import { FormsModule,  ReactiveFormsModule } from '@angular/forms';
 import { EditExamplesComponent } from './edit-examples/edit-examples.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CreateCardComponent } from './create-card/create-card.component';
+import {AutosizeModule} from 'ngx-autosize';
+import { CreateBundleComponent } from './create-bundle/create-bundle.component';
 @NgModule({
   declarations: [
     AppComponent,
     CardSliderComponent,
     EditDescriptionComponent,
-    EditExamplesComponent
+    EditExamplesComponent,
+    NavBarComponent,
+    CreateCardComponent,
+    CreateBundleComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +32,9 @@ import { EditExamplesComponent } from './edit-examples/edit-examples.component';
     MaterialModule,
     NgbModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    AppRoutingModule,
+    AutosizeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

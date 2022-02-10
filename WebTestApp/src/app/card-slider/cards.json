@@ -1,0 +1,39 @@
+[
+  {
+    "frontTerm": "rzeka",
+    "reverseTerm": "a river",
+    "frontLang": "pl",
+    "reverseLang": "gb",
+    "description": " it is a simple word, no description needed",
+    "examples": [
+      "first example",
+      "secomd example",
+      "third example"
+    ]
+
+  },
+  {
+    "frontTerm": "drzewo",
+    "reverseTerm": "a tree",
+    "frontLang": "pl",
+    "reverseLang": "gb",
+    "description": " it is a simple word, no description needed",
+    "examples": [
+      "first example",
+      "secomd example",
+      "third example"
+    ]
+  },
+  {
+    "frontTerm": "rodzina",
+    "reverseTerm": "something special",
+    "frontLang": "pl",
+    "reverseLang": "gb",
+    "description": " it is a simple word, no description needed",
+    "examples": [
+      "first example",
+      "secomd example",
+      "third example"
+    ]
+  }
+]

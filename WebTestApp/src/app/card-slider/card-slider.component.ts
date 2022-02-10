@@ -84,7 +84,7 @@ export class CardSliderComponent implements OnInit {
     this.frontCard.innerHTML = this.actualCard['nativeExpression'];
     this.backCard.innerHTML = this.actualCard["foreignExpression"];
     this.counter.innerHTML = this.number + 1 + "/" + this.quantity;
-    this.description.innerHTML = this.actualCard["description"];
+    //this.description.innerHTML = this.actualCard["description"];
     //this.setExamples();
     this.countryFlag.src = this.getCountryCode(this.actualCard["nativeLang"]);
     this.countryFlagForeign.src = this.getCountryCode(this.actualCard["foreignLang"]);
@@ -166,6 +166,7 @@ export class CardSliderComponent implements OnInit {
       });
     });
     
+    this.updateCard();
   }
 
 
@@ -197,7 +198,7 @@ updateCard(){
   this.progress.ariaValueNow = <string> <unknown> percentage ;
   this.progress.style.width = percentage+'%';
 
-  this.description.innerHTML = this.actualCard["description"];
+  //this.description.innerHTML = this.actualCard["description"];
   //this.setExamples();
 }
 
@@ -278,26 +279,6 @@ previousCard(){
 
 }
 
-reloadDescription():void {
-  this.description = document.querySelector('.descriptionContent') as HTMLDivElement;
-}
-editDescription():void {
-  this.activeEditDescription = !this.activeEditDescription;
-  this.description.style.display="none";
-}
 
-editExamples(): void {
-  this.activeEditExamples = !this.activeEditExamples;
-}
-
-getEditDescriptionStatus(active: any){
-  this.activeEditDescription = active as boolean;
-  this.description.style.display="flex";
-  this.updateCard();
-}
-
-getEditExamplesStatus(active: any){
-  this.activeEditExamples = active as boolean;
-}
 }
 

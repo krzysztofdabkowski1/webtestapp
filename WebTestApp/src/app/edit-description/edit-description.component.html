@@ -1,7 +1,18 @@
+<div class="descriptionHead">
+    <p>Opis</p> 
+    
+    <mat-icon *ngIf="!activeEditDescription" class="editBtn" (click)="editDescription()">edit</mat-icon>
+    <mat-icon *ngIf="activeEditDescription" class="editBtn" (click)="editDescription()">keyboard_arrow_up</mat-icon>
+    
+</div>
 <div class="descriptionContent">
+    <ng-container *ngIf="!activeEditDescription" >
+        <p>{{description}}</p>
+    </ng-container>
+    <ng-container *ngIf="activeEditDescription">
     <form  class="form" [formGroup]="descriptionForm" (ngSubmit)="onSubmit()">
 
-        <textarea class="content" type="text" formControlName="content">
+        <textarea #myTextArea class="content" type="text" formControlName="content">
         </textarea>
         <div class="buttons">
             <button class="btn btn-info" type="submit">Zapisz</button>
@@ -10,4 +21,5 @@
         
       
       </form>
+    </ng-container>
 </div>

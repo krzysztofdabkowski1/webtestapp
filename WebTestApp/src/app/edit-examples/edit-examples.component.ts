@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatLine } from '@angular/material/core';
+import { HasElementRef } from '@angular/material/core/common-behaviors/color';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 
@@ -13,20 +16,25 @@ export class EditExamplesComponent implements OnInit {
   examples!: string[];
   id!: number;
   exampleIndex!: number | undefined;
+  activeEditExamples: boolean = false;
+  @ViewChild('myTextArea', {static: true})
+  textAreaRef!: ElementRef;
 
   @Input() set cardId(value: number){
-    console.log(value);
     this.id = value;
-    let card:CardDetails = this.dataService.getCardById(this.id);
-    this.examples = card.examples;
+    this.activeEditExamples = false;
+    this.examplesForm.reset();
+    this.setExamples();
   }
   
-  @Input()
-  activeEditExamples!: boolean;
+  @ViewChild("myTextArea") set myTextAreaRef(ref: ElementRef) {
+    if (!!ref) {
+      ref.nativeElement.focus() ;
+    }
+  }
 
-  @Output()
-  activeEditExamplesOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+ 
   examplesForm = this.formBuilder.group({
     content: ''
   });
@@ -46,6 +54,7 @@ export class EditExamplesComponent implements OnInit {
     
   }
 
+
   onSubmit(): void {
     // Process checkout data here
     if(this.exampleIndex === undefined){
@@ -62,7 +71,11 @@ export class EditExamplesComponent implements OnInit {
 
   cancel() {
     this.activeEditExamples = false;
-    this.activeEditExamplesOutput.emit(false);
+    this.examplesForm.reset();
+  }
+
+  cancelEdit() {
+    this.exampleIndex = undefined;
     this.examplesForm.reset();
   }
 
@@ -73,6 +86,18 @@ export class EditExamplesComponent implements OnInit {
   editExample(index: number){
     this.exampleIndex = index;
     this.examplesForm.controls['content'].setValue(this.examples[this.exampleIndex]);
+  }
+
+  editExamples(e: Event): void {
+    this.activeEditExamples = !this.activeEditExamples;
+    this.setExamples();
+  }
+
+  setExamples(){
+    let card:CardDetails = this.dataService.getCardById(this.id);
+    this.examples = card.examples;
+    this.exampleIndex = undefined;
+
   }
 }
 

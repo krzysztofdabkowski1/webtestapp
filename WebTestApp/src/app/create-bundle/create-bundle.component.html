@@ -1,0 +1,13 @@
+<div class="create-container" *ngFor="let id of bundleCardsID">
+    <app-create-card id="create-card-id"
+        [numberOfCard]="id"
+        [save]="saveCards"
+        (savedCard)="getSavedCard($event)">
+    </app-create-card>
+    
+</div>
+<button class="btn btn-info" (click)="addCard()">dodaj kartę</button>
+<div class="buttons">
+    <button class="btn btn-info" type="button" (click)="submit()">Zapisz</button>
+    <button class="btn btn-danger" type="button" (click)="cancel()" >Anuluj</button>
+</div>

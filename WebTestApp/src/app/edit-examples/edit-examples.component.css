@@ -3,6 +3,7 @@
     padding: 15px;
     word-wrap:break-word;
     word-break:break-all;
+    width: 100%;
     background: rgba( 56, 56, 56, 0.65 );
     box-shadow: 5px 5px rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 4.5px );
@@ -11,6 +12,7 @@
     height: auto;
     border-radius: 0 0 10px 10px;
     z-index: 0;
+    color:white
 }
 
 .form {
@@ -18,6 +20,7 @@
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
+    
 }
 .content{
     background-color:rgba(0, 0, 0, 0.1);
@@ -25,6 +28,7 @@
     width: 100%;
     color: white;
     resize: none;
+    height: 50px;
     
 }
 
@@ -48,14 +52,45 @@
     border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.0);
     color: white; 
+    cursor: pointer;
+}
+
+.editList {
+    width: 100%;
 }
 
 .tableRow{
     display: flex;
     flex-direction: row;
+    width: 100%;
+    
+}
+
+.editCell{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;    
+    width: 10%;
 }
 .cell {
     margin-left: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row;    
+    width: 100%;
+}
+
+.examplesHead{
+    color:white;
+    height: 30px;
+    border-bottom: 3px solid rgba(0, 0, 0, 0);
+    padding-left: 15px;
+    padding-top: 5px;
+    background: rgba( 56, 56, 56, 0.65 );
+    box-shadow: 5px 5px rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
+    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
 }

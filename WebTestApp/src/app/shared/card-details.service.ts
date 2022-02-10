@@ -81,5 +81,17 @@ export class CardDetailsService {
     let index = this.cards.indexOf(obj);
     this.cards[index].examples = examples;
   }
+
+  addCard(card: CardDetails){
+    let maxId:number = Math.max.apply(Math, this.cards.map(function(c) { return c.id; }))
+    card.id = maxId+1;
+    this.cards.push(card)
+  }
   
+  addBundle(bundle:CardDetails[]){
+    bundle.forEach((c)=>{
+      this.addCard(c);
+    })
+
+  }
 }

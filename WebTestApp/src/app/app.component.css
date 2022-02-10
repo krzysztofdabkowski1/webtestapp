@@ -5,24 +5,14 @@
     overflow-x:hidden;
     z-index: 1;
 }
+.app-container{
+    overflow-x:hidden;
+    position: relative;
+    top:10%;
+    width: 100%;
+    height: auto;
+}
 
-.blobdiv1{
-    background-image:  url('/assets/blob.svg');
-    background-position: left top;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    opacity: 0.65;
-    width: 95%;
-    height: 100%;
-    position: fixed;
-}
-.blobdiv2{
-    background-image:  url('/assets/blob2.svg');
-    background-position: left top;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    opacity: 0.65;
-    width: 95%;
-    height: 100%;
-    position: fixed;
-}
+
+
+
