@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CreateCardComponent } from './create-card/create-card.component';
 import {AutosizeModule} from 'ngx-autosize';
 import { CreateBundleComponent } from './create-bundle/create-bundle.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { CreateBundleComponent } from './create-bundle/create-bundle.component';
     FormsModule, 
     ReactiveFormsModule, 
     AppRoutingModule,
-    AutosizeModule
+    AutosizeModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

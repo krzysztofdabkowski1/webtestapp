@@ -1,8 +1,7 @@
 <div class="create-container" *ngFor="let id of bundleCardsID">
     <app-create-card id="create-card-id"
         [numberOfCard]="id"
-        [save]="saveCards"
-        (savedCard)="getSavedCard($event)">
+        [save]="saveCards">
     </app-create-card>
     
 </div>
@@ -11,3 +10,4 @@
     <button class="btn btn-info" type="button" (click)="submit()">Zapisz</button>
     <button class="btn btn-danger" type="button" (click)="cancel()" >Anuluj</button>
 </div>
+

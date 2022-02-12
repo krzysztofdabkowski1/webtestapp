@@ -14,6 +14,7 @@
 
 .container {
     display: flex;
+    position: relative;
     align-items: center;
     flex-direction: column;
     perspective: 600px;

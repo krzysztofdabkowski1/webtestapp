@@ -6,16 +6,13 @@
                 <h3>{{numberOfCard}}</h3>     
             </div>
             <div class="native-word">
-                <textarea id="native-textarea" class="content-input"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" autosize required>
+                <textarea #nativeWord id="native-textarea" class="content-input"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" (input)="detectNativeWordChange(nativeWord.value)" autosize required>
                 </textarea>
                 <div class="linear-underline"></div>
-                <div id="native-p">
-                <p *ngIf="!nativeWord.touched || !!nativeWord.hasError('required')">wyrażenie</p>
-                <p *ngIf="nativeWord.touched && nativeWord.hasError('required')">Invalid</p>
-                </div>
+                <div id="native-p">wyrażenie</div>
             </div>
             <div class="foreign-word">
-                <textarea id="foreign-textarea" class="content-input"  type="text" rows="1" formControlName="foreignWord" placeholder="tłumaczenie" autosize required>
+                <textarea #foreignWord id="foreign-textarea" class="content-input"  type="text" rows="1" formControlName="foreignWord" placeholder="tłumaczenie" (input)="detectForeignWordChange(foreignWord.value)"autosize required>
                 </textarea><div class="linear-underline"></div>
                 <p id="foreign-p" >tłumaczenie</p>
             </div>
@@ -26,7 +23,7 @@
         <div class="cardDescription">
             <div class='description'>
                 <div class="descriptionContent">
-                        <textarea id="description-textarea" class="content-input"  type="text" formControlName="description" rows="1" placeholder="opis" autosize>
+                        <textarea #description id="description-textarea" class="content-input"  type="text" formControlName="description" rows="1" placeholder="opis" (input)="detectDescriptionChange(description.value)" autosize>
                         </textarea>
                         <div class="linear-underline"></div>
                         <p id="description-p" >opis</p>

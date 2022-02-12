@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateCardComponent } from '../create-card/create-card.component';
+import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 
@@ -17,11 +18,13 @@ export class CreateBundleComponent implements OnInit {
   bundle:CardDetails[] = [];
   constructor(
     private dataService: CardDetailsService,
+    private bundleCollector: BundleCollectorService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.bundleCardsID = [1,2,3];
+    this.bundleCollector.addEmptyCard(3);
   }
 
   addCard(){
@@ -34,16 +37,11 @@ export class CreateBundleComponent implements OnInit {
   }
 
   submit(){
-    this.saveCards = true;
-    let interval = setInterval(()=>{
-      if(this.isCollectingCardsfinished()){
-        this.dataService.addBundle(this.bundle);
-        this.bundle = [];
-        clearInterval(interval);
-        //this.router.navigate(['/cards'])
-      }
-    },100)
-    
+    let bundle: CardDetails[] = this.bundleCollector.getBundle();
+    console.log()
+    this.dataService.addBundle(bundle);
+    this.router.navigate(['/cards'])
+ 
   }
   isCollectingCardsfinished(): Boolean {
     if(this.bundle.length === this.bundleCardsID.length){

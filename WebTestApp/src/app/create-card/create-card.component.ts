@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
+import { CardSubject } from './card-subject';
 
 @Component({
   selector: 'app-create-card',
@@ -14,9 +17,9 @@ export class CreateCardComponent implements OnInit {
   id!: number;
   exampleIndex!: number | undefined;
 
-  @Output() savedCard = new EventEmitter<CardDetails>();
   @Input() numberOfCard: number | undefined;
-  
+  cardSubject!: CardSubject;
+
   @Input() set save(value: Boolean){
     if(value == true){
       this.ngOnSubmit();
@@ -24,7 +27,7 @@ export class CreateCardComponent implements OnInit {
   }
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: CardDetailsService
+    private bundleCollector: BundleCollectorService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +38,7 @@ export class CreateCardComponent implements OnInit {
       example: ''
     });
 
+    this.cardSubject = new CardSubject(this.bundleCollector, this.numberOfCard!);
     this.setExamples();
 
     const foreignTextArea = document.querySelector('#foreign-textarea') as HTMLTextAreaElement;
@@ -83,12 +87,11 @@ export class CreateCardComponent implements OnInit {
       }
     });
 
+
   }
 
+
   ngOnSubmit(): void {
-    // Process checkout data here
-    //this.items = this.cartService.clearCart();
-    // console.warn('Ustawiono opis:', this.descriptionForm.value, 'card id:' + this.id);
     if(this.createCardForm.valid){
       let card: CardDetails = {"id": -1,
                             "nativeExpression": this.createCardForm.controls['nativeWord'].value,
@@ -97,11 +100,8 @@ export class CreateCardComponent implements OnInit {
                             "foreignLang": "gb",
                             "description": this.createCardForm.controls['description'].value,
                             "examples": this.examples};
-    // this.description = this.descriptionForm.controls['content'].value;
-    //this.dataService.addCard(card);
     this.examples = [];
     this.createCardForm.reset();
-    this.savedCard.emit(card);
     }
     else{
       
@@ -143,15 +143,18 @@ export class CreateCardComponent implements OnInit {
     this.createCardForm.controls['example'].setValue('');
     this.exampleIndex = undefined;
     this.showExampleInput();
+    this.changedExamples();
   }
   addExample(){
     const exampleP = document.querySelector('#example-p') as HTMLElement;
     exampleP.style.visibility = "hidden";
     this.examples.push(this.createCardForm.controls['example'].value);
     this.createCardForm.controls['example'].setValue('');
+    this.changedExamples();
   }
   deleteExample(index: number){
     this.examples.splice(index, 1);
+    this.changedExamples();
   }
 
   editExample(index: number){
@@ -178,5 +181,20 @@ export class CreateCardComponent implements OnInit {
     newExample.style.display = 'flex';
   }
 
-  get nativeWord() { return this.createCardForm.get('nativeWord'); }
+
+  detectNativeWordChange(expr: string){
+    this.cardSubject.updateNativeWord(expr);
+  }
+
+  detectForeignWordChange(expr: string){
+    this.cardSubject.updateForeignWord(expr);
+  }
+
+  detectDescriptionChange(expr: string){
+    this.cardSubject.updateDescription(expr);
+  }
+
+  changedExamples(){
+    this.cardSubject.updateExamples(this.examples);
+  }
 }
