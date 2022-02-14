@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "@fortawesome/angular-fontawesome": "^0.6.0",
+    "@material/snackbar": "^13.0.0",
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "bootstrap": "^4.6.0",
     "material-design-icons": "^3.0.1",

@@ -20,9 +20,16 @@ export class CreateCardComponent implements OnInit {
   @Input() numberOfCard: number | undefined;
   cardSubject!: CardSubject;
 
-  @Input() set save(value: Boolean){
+  @Input() set unvalidated(value: Boolean){
+  
     if(value == true){
-      this.ngOnSubmit();
+      const required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
+      required.forEach( (r)=>{
+        r.classList.add('warning');
+      })
+      let arrReq = Array.from(required);
+      arrReq.find( r => r.value=='')?.focus()
+      
     }
   }
   constructor(
@@ -41,53 +48,64 @@ export class CreateCardComponent implements OnInit {
     this.cardSubject = new CardSubject(this.bundleCollector, this.numberOfCard!);
     this.setExamples();
 
-    const foreignTextArea = document.querySelector('#foreign-textarea') as HTMLTextAreaElement;
-    const foreignP = document.querySelector('#foreign-p') as HTMLElement;
-    const nativeTextArea = document.querySelector('#native-textarea') as HTMLTextAreaElement;
-    const nativeP = document.querySelector('#native-p') as HTMLElement;
-    const descriptionTextArea = document.querySelector('#description-textarea') as HTMLTextAreaElement;
-    const descriptionP = document.querySelector('#description-p') as HTMLElement;
-    const exampleTextArea = document.querySelector('#example-textarea') as HTMLTextAreaElement;
-    const exampleP = document.querySelector('#example-p') as HTMLElement;
+    const foreignTextArea = document.querySelectorAll('#foreign-textarea') as unknown as HTMLTextAreaElement[];
+    const foreignP = document.querySelectorAll('#foreign-p') as unknown as HTMLElement[];
+    const nativeTextArea = document.querySelectorAll('#native-textarea') as unknown as HTMLTextAreaElement[];
+    const nativeP = document.querySelectorAll('#native-p') as unknown as HTMLElement[];
+    const descriptionTextArea = document.querySelectorAll('#description-textarea') as unknown as HTMLTextAreaElement[]
+    const descriptionP = document.querySelectorAll('#description-p') as unknown as HTMLElement[];
+    const exampleTextArea = document.querySelectorAll('#example-textarea') as unknown as HTMLTextAreaElement[];
+    const exampleP = document.querySelectorAll('#example-p') as unknown as HTMLElement[];
 
+    if(this.numberOfCard){
 
-    foreignTextArea.addEventListener('input', ()=>{
-      if(foreignTextArea.value.length!==0){
-        foreignP.style.visibility = "visible";
-      }
-      else{
-        foreignP.style.visibility = "hidden";
-      }
+    
+
+    foreignTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
+      if(this.numberOfCard){
+        if(foreignTextArea[this.numberOfCard-1].value.length!==0){
+          foreignP[this.numberOfCard-1].style.visibility = "visible";
+        }
+        else{
+          foreignP[this.numberOfCard-1].style.visibility = "hidden";
+        }
+      } 
     });
 
-    nativeTextArea.addEventListener('input', ()=>{
-      if(nativeTextArea.value.length!==0){
-        nativeP.style.visibility = "visible";
+    nativeTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
+      if(this.numberOfCard){
+      if(nativeTextArea[this.numberOfCard-1].value.length!==0){
+        nativeP[this.numberOfCard-1].style.visibility = "visible";
       }
       else{
-        nativeP.style.visibility = "hidden";
+        nativeP[this.numberOfCard-1].style.visibility = "hidden";
       }
+    }
     });
 
-    descriptionTextArea.addEventListener('input', ()=>{
-      if(descriptionTextArea.value.length!==0){
-        descriptionP.style.visibility = "visible";
+    descriptionTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
+      if(this.numberOfCard){
+      if(descriptionTextArea[this.numberOfCard-1].value.length!==0){
+        descriptionP[this.numberOfCard-1].style.visibility = "visible";
       }
       else{
-        descriptionP.style.visibility = "hidden";
+        descriptionP[this.numberOfCard-1].style.visibility = "hidden";
       }
+    }
     });
 
-    exampleTextArea.addEventListener('input', ()=>{
-      if(exampleTextArea.value.length!==0){
-        exampleP.style.visibility = "visible";
+    exampleTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
+      if(this.numberOfCard){
+      if(exampleTextArea[this.numberOfCard-1].value.length!==0){
+        exampleP[this.numberOfCard-1].style.visibility = "visible";
       }
       else{
-        exampleP.style.visibility = "hidden";
+        exampleP[this.numberOfCard-1].style.visibility = "hidden";
       }
+    }
     });
 
-
+  }
   }
 
 

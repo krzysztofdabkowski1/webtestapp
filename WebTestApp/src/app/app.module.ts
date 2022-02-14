@@ -16,6 +16,7 @@ import { CreateCardComponent } from './create-card/create-card.component';
 import {AutosizeModule} from 'ngx-autosize';
 import { CreateBundleComponent } from './create-bundle/create-bundle.component';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     AppRoutingModule,
     AutosizeModule,
     MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -58,6 +58,7 @@ export class EditExamplesComponent implements OnInit {
   onSubmit(): void {
     // Process checkout data here
     if(this.exampleIndex === undefined){
+      console.log(this.examplesForm.controls['content'].value)
       this.examples.push(this.examplesForm.controls['content'].value);
     }
     else {
@@ -95,7 +96,13 @@ export class EditExamplesComponent implements OnInit {
 
   setExamples(){
     let card:CardDetails = this.dataService.getCardById(this.id);
-    this.examples = card.examples;
+    if(card.examples === undefined){
+      this.examples = []
+    }
+    else{
+      this.examples = card.examples;
+    }
+    
     this.exampleIndex = undefined;
 
   }

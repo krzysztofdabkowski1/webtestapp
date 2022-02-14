@@ -266,3 +266,15 @@
     display: flex;
     justify-content: flex-end;
 }
+
+
+.warning::placeholder{
+    color:red;
+}
+.warning:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red;
+}
+  
+.warning::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+}

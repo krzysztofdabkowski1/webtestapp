@@ -4,6 +4,8 @@ import { CreateCardComponent } from '../create-card/create-card.component';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { CardsValidator } from './cards-validator';
 
 @Component({
   selector: 'app-create-bundle',
@@ -16,10 +18,12 @@ export class CreateBundleComponent implements OnInit {
 
   saveCards: Boolean = false;
   bundle:CardDetails[] = [];
+
   constructor(
     private dataService: CardDetailsService,
     private bundleCollector: BundleCollectorService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +33,7 @@ export class CreateBundleComponent implements OnInit {
 
   addCard(){
     this.bundleCardsID.push(this.bundleCardsID.length+1);
+    this.bundleCollector.addEmptyCard();
   }
 
   cancel() {
@@ -38,9 +43,17 @@ export class CreateBundleComponent implements OnInit {
 
   submit(){
     let bundle: CardDetails[] = this.bundleCollector.getBundle();
-    console.log()
-    this.dataService.addBundle(bundle);
-    this.router.navigate(['/cards'])
+    let validator = new CardsValidator(bundle);
+    if(validator.areFieldsFilled()){
+      this.dataService.addBundle(bundle);
+      this.bundleCollector.clear();
+      this.openSnackBar("Dodano zestaw kart!", bundle.length.toString());
+      this.router.navigate(['/cards'])
+    }
+    else{
+      this.saveCards = true;
+      this.openSnackBar("Uzupełnij wszystkie pola!",'');
+    }
  
   }
   isCollectingCardsfinished(): Boolean {
@@ -54,4 +67,11 @@ export class CreateBundleComponent implements OnInit {
   getSavedCard(card:CardDetails){
     this.bundle.push(card);
   }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }
+
+

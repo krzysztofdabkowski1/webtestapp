@@ -89,6 +89,7 @@ export class CardDetailsService {
   }
   
   addBundle(bundle:CardDetails[]){
+    
     bundle.forEach((c)=>{
       this.addCard(c);
     })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CardDetails } from './card-details.model';
+import { CardDetails, EmptyCard } from './card-details.model';
 import { CardDetailsService } from './card-details.service';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class BundleCollectorService {
       amount = 1;
     }
     for(let i = 0; i<amount; i++){
-      this.cards.push({} as CardDetails);
+      this.cards.push(new EmptyCard());
     }
   }
 
