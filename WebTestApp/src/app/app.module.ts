@@ -17,6 +17,8 @@ import {AutosizeModule} from 'ngx-autosize';
 import { CreateBundleComponent } from './create-bundle/create-bundle.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { CreateBundleDetailsComponent } from './create-bundle-details/create-bundle-details.component';
+import { BundlesListComponent } from './bundles-list/bundles-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     EditExamplesComponent,
     NavBarComponent,
     CreateCardComponent,
-    CreateBundleComponent
+    CreateBundleComponent,
+    CreateBundleDetailsComponent,
+    BundlesListComponent
   ],
   imports: [
     BrowserModule,

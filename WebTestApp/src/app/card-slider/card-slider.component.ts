@@ -3,6 +3,9 @@ import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 import {MatIconModule} from '@angular/material/icon';
 import { EditDescriptionComponent } from '../edit-description/edit-description.component';
+import { Bundle } from '../shared/bundle.model';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'card-slider-component',
@@ -11,7 +14,8 @@ import { EditDescriptionComponent } from '../edit-description/edit-description.c
 })
 export class CardSliderComponent implements OnInit {
 
-   cards!:CardDetails[];  
+   bundleObservable!:Observable<Bundle>;  
+   bundle!: Bundle;
    cardID:number = 0;
    activeEditDescription: boolean = false;
    activeEditExamples: boolean = false;
@@ -45,21 +49,28 @@ export class CardSliderComponent implements OnInit {
   
   
 
-  constructor(private dataService: CardDetailsService) { }
+  constructor(private dataService: CardDetailsService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.dataService.getLocalCards().subscribe( _cards => {
-      this.cards = _cards
-      console.log(_cards);
-    });
-    console.log(this.cards);
-    this.quantity = this.cards.length;
+    this.bundleObservable = this.route.paramMap.pipe(
+      switchMap(params => {
+        let selectedID =  Number(params.get('id'));
+        this.dataService.getBundle(selectedID).subscribe((b)=>{
+          this.bundle = b;
+          console.log(b)
+        })
+        return this.dataService.getBundle(selectedID);
+      })
+    );
+
+    this.quantity = this.bundle.cards.length;
     this.number = 0;
     this.clickedNextCard = false;
     this.isFront = true;
     this.areNotesOn = false;
     this.isSoundOn = false;
-    this.actualCard = this.cards[0];
+    this.actualCard = this.bundle.cards[0];
     
     this.frontCard = document.querySelector('.frontCard') as HTMLDivElement;
     this.backCard = document.querySelector('.backCard') as HTMLDivElement;
@@ -187,7 +198,7 @@ getCountryCode(countryName: string) {
 }
 
 updateCard(){
-  this.actualCard = this.cards[this.number];
+  this.actualCard = this.bundle.cards[this.number];
 
   this.frontCard.innerHTML = this.actualCard["nativeExpression"];
   this.backCard.innerHTML = this.actualCard["foreignExpression"];

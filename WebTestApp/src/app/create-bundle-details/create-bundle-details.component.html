@@ -1,0 +1,18 @@
+<div class="create-bundle-details">
+    <form  class="form" [formGroup]="createBundleDetailsForm" (ngSubmit)="ngOnSubmit()">
+        <div class="create-content"> 
+            <div class="bundle-name">
+                <textarea #bundleName id="bundle-name-textarea" class="content-input required"  type="text" rows="1" formControlName="bundleName" placeholder="tytuł zestawu" (input)="detectBundleNameChange(bundleName.value)" autosize required>
+                </textarea>
+                <div class="linear-underline"></div>
+                <div id="bundle-name">tytuł zestawu</div>
+            </div>
+            <div class="bundle-description">
+                <textarea #bundleDescription id="bundle-description-textarea" class="content-input-description"  type="text" rows="3" formControlName="bundleDescription" placeholder="opis" (input)="detectBundleDescriptionChange(bundleDescription.value)" autosize required>
+                </textarea>
+                <div class="linear-underline"></div>
+                <div id="bundle-description">opis</div>
+            </div>
+        </div>
+    </form>
+</div>

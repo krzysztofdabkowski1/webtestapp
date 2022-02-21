@@ -1,0 +1,46 @@
+ <div class="bundles-container" >
+
+    <div class="bundles-nav">
+        <div class="bundles-nav-section-title">
+            Ostatnie
+        </div>
+        <div class="bundles-nav-section-line"></div>
+    </div>
+ <div class="list" *ngFor="let id of bundles"> 
+    <div class="bundle" [routerLink]="['/bundle', id]">
+        <div class="bundle-header">
+            <h2 class="title">Bundle title is here <span class="number-of-cards">/catalog</span></h2>
+            <div class="details">
+                <span class="number-of-cards"> 34 karty</span>
+                <span class="date">Aktualizowano: 23 lutego 2022</span>
+            </div>
+            
+        </div>
+        <div class="linear-underline"></div>
+    </div>
+    
+</div>
+<div class="bundles-nav">
+    <div class="bundles-nav-section-title">
+        Styczeń
+    </div>
+    <div class="bundles-nav-section-line"></div>
+</div>
+
+
+<div class="list" *ngFor="let id of bundles"> 
+    <div class="bundle">
+        <div class="bundle-header">
+            <h2 class="title">Bundle title is here <span class="number-of-cards">/other_catalog</span></h2>
+            <div class="details">
+                <span class="number-of-cards"> 34 karty</span>
+                <span class="date">Aktualizowano: 4 stycznia 2022</span>
+            </div>
+            
+        </div>
+        <div class="linear-underline"></div>
+    </div>
+    
+</div>
+
+</div>

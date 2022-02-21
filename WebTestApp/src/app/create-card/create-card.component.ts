@@ -20,17 +20,16 @@ export class CreateCardComponent implements OnInit {
   @Input() numberOfCard: number | undefined;
   cardSubject!: CardSubject;
 
-  @Input() set unvalidated(value: Boolean){
-  
-    if(value == true){
+  @Input() set validate(subject: Subject<Boolean>){
+    subject.subscribe(
+    ()=>{
       const required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
       required.forEach( (r)=>{
         r.classList.add('warning');
       })
       let arrReq = Array.from(required);
       arrReq.find( r => r.value=='')?.focus()
-      
-    }
+    })
   }
   constructor(
     private formBuilder: FormBuilder,

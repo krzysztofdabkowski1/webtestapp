@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CardDetails } from './card-details.model';
 import { Observable, of } from 'rxjs';
+import { Bundle } from './bundle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,14 @@ export class CardDetailsService {
   baseUrl: string = 'http://localhost:65419/api/';
   constructor(private http: HttpClient) { }
 
-  cards: CardDetails[] = [
+  bundles: Bundle[] = [
+    {"name": "Fiszki #1",
+      "bundleID": 1,
+      "owenerID": 1,
+      "startDate": new Date("2022-01-16"),
+      "updateDate": new Date("2022-01-19"),
+      "description": " to są fiszki",
+      "cards":[
     {
       "id": 1,
       "nativeExpression": "rzeka konstantynopolitańczykowianeczka",
@@ -52,7 +60,7 @@ export class CardDetailsService {
         "third example"
       ]
     }
-  ];  
+  ]}];  
 
   getCards(): Observable<CardDetails[]>{
     let url = this.baseUrl+'CardDetails';
@@ -62,35 +70,39 @@ export class CardDetailsService {
   }
 
   getLocalCards(): Observable<CardDetails[]> {
-    const CARDS = this.cards;
+    const CARDS = this.bundles[0].cards;
     return of(CARDS);
   }
 
+  getBundle(id: number): Observable<Bundle>{
+    return of(this.bundles[id] )
+  }
+  
   getCardById(id: number): CardDetails{
-    return this.cards.filter( c => c.id == id)[0];
+    return this.bundles[0].cards.filter( c => c.id == id)[0];
   }
 
   setCardsDescriptionById(id: number, description: string){
-    let obj: CardDetails = this.cards.find( c => c.id == id) as CardDetails;
-    let index = this.cards.indexOf(obj);
-    this.cards[index].description = description;
+    let obj: CardDetails = this.bundles[0].cards.find( c => c.id == id) as CardDetails;
+    let index = this.bundles[0].cards.indexOf(obj);
+    this.bundles[0].cards[index].description = description;
   }
 
   setCardsExamplesById(id: number, examples: string[]){
-    let obj: CardDetails = this.cards.find( c => c.id == id) as CardDetails;
-    let index = this.cards.indexOf(obj);
-    this.cards[index].examples = examples;
+    let obj: CardDetails = this.bundles[0].cards.find( c => c.id == id) as CardDetails;
+    let index = this.bundles[0].cards.indexOf(obj);
+    this.bundles[0].cards[index].examples = examples;
   }
 
   addCard(card: CardDetails){
-    let maxId:number = Math.max.apply(Math, this.cards.map(function(c) { return c.id; }))
+    let maxId:number = Math.max.apply(Math, this.bundles[0].cards.map(function(c) { return c.id; }))
     card.id = maxId+1;
-    this.cards.push(card)
+    this.bundles[0].cards.push(card)
   }
   
-  addBundle(bundle:CardDetails[]){
+  addBundle(bundle:Bundle){
     
-    bundle.forEach((c)=>{
+    bundle.cards.forEach((c)=>{
       this.addCard(c);
     })
 

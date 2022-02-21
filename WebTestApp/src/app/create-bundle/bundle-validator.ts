@@ -1,20 +1,23 @@
+import { Bundle } from "../shared/bundle.model";
 import { CardDetails } from "../shared/card-details.model";
 
-export class CardsValidator {
+export class BundleValidator {
 
-    cards!: CardDetails[];
-    constructor(cards: CardDetails[]){
-        this.cards = cards;
+    bundle!: Bundle;
+    constructor(bundle: Bundle){
+        this.bundle = bundle;
     }
 
     areFieldsFilled(): boolean{
         let areAllFilled = true;
-        this.cards.forEach( c => {
+        this.bundle.cards.forEach( c => {
             if(c.nativeExpression == '' || c.foreignExpression == ''){
                 areAllFilled = false;
             }
         })
-        console.log(this.cards)
+        if(this.bundle.name==''){
+            areAllFilled = false;
+        }
         return areAllFilled;
     }
 }

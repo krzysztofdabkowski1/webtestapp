@@ -1,7 +1,10 @@
+<create-bundle-details
+    [validate]="validate">
+</create-bundle-details>
 <div class="create-container" *ngFor="let id of bundleCardsID">
     <app-create-card id="create-card-id"
         [numberOfCard]="id"
-        [unvalidated]="saveCards">
+        [validate]="validate">
     </app-create-card>
     
 </div>

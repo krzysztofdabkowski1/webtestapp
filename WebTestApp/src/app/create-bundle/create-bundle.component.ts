@@ -5,7 +5,9 @@ import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { CardsValidator } from './cards-validator';
+import { BundleValidator } from './bundle-validator';
+import { Subject } from 'rxjs';
+import { Bundle } from '../shared/bundle.model';
 
 @Component({
   selector: 'app-create-bundle',
@@ -14,9 +16,10 @@ import { CardsValidator } from './cards-validator';
 })
 export class CreateBundleComponent implements OnInit {
 
+
   bundleCardsID: number[] = [];
 
-  saveCards: Boolean = false;
+  validate: Subject<Boolean> = new Subject();
   bundle:CardDetails[] = [];
 
   constructor(
@@ -42,16 +45,16 @@ export class CreateBundleComponent implements OnInit {
   }
 
   submit(){
-    let bundle: CardDetails[] = this.bundleCollector.getBundle();
-    let validator = new CardsValidator(bundle);
+    this.validate.next(true);
+    let bundle: Bundle = this.bundleCollector.getBundle();
+    let validator = new BundleValidator(bundle);
     if(validator.areFieldsFilled()){
       this.dataService.addBundle(bundle);
       this.bundleCollector.clear();
-      this.openSnackBar("Dodano zestaw kart!", bundle.length.toString());
+      this.openSnackBar("Dodano zestaw kart!", bundle.cards.length.toString());
       this.router.navigate(['/cards'])
     }
     else{
-      this.saveCards = true;
       this.openSnackBar("Uzupełnij wszystkie pola!",'');
     }
  
