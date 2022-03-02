@@ -17,7 +17,7 @@ import { Bundle } from '../shared/bundle.model';
 export class CreateBundleComponent implements OnInit {
 
 
-  bundleCardsID: number[] = [];
+  bundleCardsID: {'id':number,'displayId':number}[] = [];
 
   validate: Subject<Boolean> = new Subject();
   bundle:CardDetails[] = [];
@@ -30,15 +30,41 @@ export class CreateBundleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.bundleCardsID = [1,2,3];
+    this.bundleCardsID = [{'id':1, 'displayId':1},
+    {'id':2, 'displayId':2},
+    {'id':3, 'displayId':3}];
+    this.bundleCollector.addEmptyCard(1);
+    this.bundleCollector.addEmptyCard(2);
     this.bundleCollector.addEmptyCard(3);
   }
 
   addCard(){
-    this.bundleCardsID.push(this.bundleCardsID.length+1);
-    this.bundleCollector.addEmptyCard();
+    let maxDisplayId = this.getDisplayId();
+    let maxId = this.getId();
+ 
+    this.bundleCardsID.push({'displayId':maxDisplayId, 'id': maxId});
+    this.bundleCollector.addEmptyCard(maxId);
+    
+    
   }
 
+  getDisplayId(): number{
+    let maxDisplayId: number = Math.max.apply(Math, this.bundleCardsID.map(function(c) { return c.displayId; }))
+    maxDisplayId += 1;
+    if( maxDisplayId == -Infinity){
+      maxDisplayId = 1;
+    }
+    return maxDisplayId;
+  }
+
+  getId(): number{
+    let maxId: number = Math.max.apply(Math, this.bundleCardsID.map(function(c) { return c.id; }))
+    maxId += 1;
+    if( maxId == -Infinity){
+      maxId = 1;
+    }
+    return maxId;
+  }
   cancel() {
 
     
@@ -46,13 +72,13 @@ export class CreateBundleComponent implements OnInit {
 
   submit(){
     this.validate.next(true);
-    let bundle: Bundle = this.bundleCollector.getBundle();
+    let bundle: Bundle = Object.assign({},this.bundleCollector.getBundle() );
     let validator = new BundleValidator(bundle);
     if(validator.areFieldsFilled()){
       this.dataService.addBundle(bundle);
       this.bundleCollector.clear();
       this.openSnackBar("Dodano zestaw kart!", bundle.cards.length.toString());
-      this.router.navigate(['/cards'])
+      this.router.navigate(['/bundles'])
     }
     else{
       this.openSnackBar("Uzupełnij wszystkie pola!",'');
@@ -74,6 +100,26 @@ export class CreateBundleComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  deleteCard(id: number){
+    let card: HTMLElement = document.querySelector('#card-'+String(id)) as HTMLElement;
+    let cardContainer: HTMLElement = document.querySelector('#card-container-'+String(id)) as HTMLElement;
+    card.classList.toggle('move-to-right');
+    cardContainer.classList.toggle('height-to-zero');
+    setTimeout(() =>{
+      
+      card?.remove();
+      this.bundleCollector.deleteCard(id);
+      this.bundleCardsID = this.bundleCardsID.filter(b => b.id !== id);
+      
+      let num = 1;
+      this.bundleCardsID.forEach( b=> {
+        b.displayId = num;
+        num += 1;
+      })
+    },1000);
+    
   }
 }
 

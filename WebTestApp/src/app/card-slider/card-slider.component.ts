@@ -13,8 +13,7 @@ import { Observable, switchMap } from 'rxjs';
   styleUrls: ['./card-slider.component.css']
 })
 export class CardSliderComponent implements OnInit {
-
-   bundleObservable!:Observable<Bundle>;  
+ 
    bundle!: Bundle;
    cardID:number = 0;
    activeEditDescription: boolean = false;
@@ -53,16 +52,12 @@ export class CardSliderComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.bundleObservable = this.route.paramMap.pipe(
-      switchMap(params => {
-        let selectedID =  Number(params.get('id'));
-        this.dataService.getBundle(selectedID).subscribe((b)=>{
-          this.bundle = b;
-          console.log(b)
-        })
-        return this.dataService.getBundle(selectedID);
-      })
-    );
+    
+    let selectedID: number = Number(this.route.snapshot.paramMap.get('id'));
+    this.dataService.getBundle(selectedID).subscribe((b)=>{
+      this.bundle = b;
+      console.log(b)
+    })
 
     this.quantity = this.bundle.cards.length;
     this.number = 0;
@@ -97,8 +92,8 @@ export class CardSliderComponent implements OnInit {
     this.counter.innerHTML = this.number + 1 + "/" + this.quantity;
     //this.description.innerHTML = this.actualCard["description"];
     //this.setExamples();
-    this.countryFlag.src = this.getCountryCode(this.actualCard["nativeLang"]);
-    this.countryFlagForeign.src = this.getCountryCode(this.actualCard["foreignLang"]);
+    this.countryFlag.src = this.getCountryCode(this.bundle.nativeLang);
+    this.countryFlagForeign.src = this.getCountryCode(this.bundle.foreignLang);
 
     let self = this;
     this.card.onclick = function(e) { 

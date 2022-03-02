@@ -18,6 +18,7 @@ export class CreateCardComponent implements OnInit {
   exampleIndex!: number | undefined;
 
   @Input() numberOfCard: number | undefined;
+  @Input() displayNumberOfCard: number | undefined;
   cardSubject!: CardSubject;
 
   @Input() set validate(subject: Subject<Boolean>){
@@ -56,50 +57,49 @@ export class CreateCardComponent implements OnInit {
     const exampleTextArea = document.querySelectorAll('#example-textarea') as unknown as HTMLTextAreaElement[];
     const exampleP = document.querySelectorAll('#example-p') as unknown as HTMLElement[];
 
-    if(this.numberOfCard){
+    if(this.numberOfCard && this.displayNumberOfCard){
 
-    
 
-    foreignTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
-      if(this.numberOfCard){
-        if(foreignTextArea[this.numberOfCard-1].value.length!==0){
-          foreignP[this.numberOfCard-1].style.visibility = "visible";
+    foreignTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
+      if(this.displayNumberOfCard){
+        if(foreignTextArea[this.displayNumberOfCard-1].value.length!==0){
+          foreignP[this.displayNumberOfCard-1].style.visibility = "visible";
         }
         else{
-          foreignP[this.numberOfCard-1].style.visibility = "hidden";
+          foreignP[this.displayNumberOfCard-1].style.visibility = "hidden";
         }
       } 
     });
 
-    nativeTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
-      if(this.numberOfCard){
-      if(nativeTextArea[this.numberOfCard-1].value.length!==0){
-        nativeP[this.numberOfCard-1].style.visibility = "visible";
+    nativeTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
+      if(this.displayNumberOfCard){
+      if(nativeTextArea[this.displayNumberOfCard-1].value.length!==0){
+        nativeP[this.displayNumberOfCard-1].style.visibility = "visible";
       }
       else{
-        nativeP[this.numberOfCard-1].style.visibility = "hidden";
+        nativeP[this.displayNumberOfCard-1].style.visibility = "hidden";
       }
     }
     });
 
-    descriptionTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
-      if(this.numberOfCard){
-      if(descriptionTextArea[this.numberOfCard-1].value.length!==0){
-        descriptionP[this.numberOfCard-1].style.visibility = "visible";
+    descriptionTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
+      if(this.displayNumberOfCard){
+      if(descriptionTextArea[this.displayNumberOfCard-1].value.length!==0){
+        descriptionP[this.displayNumberOfCard-1].style.visibility = "visible";
       }
       else{
-        descriptionP[this.numberOfCard-1].style.visibility = "hidden";
+        descriptionP[this.displayNumberOfCard-1].style.visibility = "hidden";
       }
     }
     });
 
-    exampleTextArea[this.numberOfCard-1].addEventListener('input', ()=>{
-      if(this.numberOfCard){
-      if(exampleTextArea[this.numberOfCard-1].value.length!==0){
-        exampleP[this.numberOfCard-1].style.visibility = "visible";
+    exampleTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
+      if(this.displayNumberOfCard){
+      if(exampleTextArea[this.displayNumberOfCard-1].value.length!==0){
+        exampleP[this.displayNumberOfCard-1].style.visibility = "visible";
       }
       else{
-        exampleP[this.numberOfCard-1].style.visibility = "hidden";
+        exampleP[this.displayNumberOfCard-1].style.visibility = "hidden";
       }
     }
     });
@@ -111,6 +111,7 @@ export class CreateCardComponent implements OnInit {
   ngOnSubmit(): void {
     if(this.createCardForm.valid){
       let card: CardDetails = {"id": -1,
+                            "bundleId": -1,
                             "nativeExpression": this.createCardForm.controls['nativeWord'].value,
                             "foreignExpression": this.createCardForm.controls['foreignWord'].value,
                             "nativeLang": "pl",

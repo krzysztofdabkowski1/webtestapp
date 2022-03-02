@@ -1,7 +1,9 @@
+import { CardDetailsService } from "./card-details.service";
 
 
 export interface CardDetails{
     id: number ;
+    bundleId: number;
     nativeExpression: string;
     foreignExpression: string;
     nativeLang: string;
@@ -10,13 +12,20 @@ export interface CardDetails{
     examples: string[];
 };
 
-export class EmptyCard implements CardDetails{
+
+export class Card implements CardDetails{
     id = 0;
+    bundleId = 0;
     nativeExpression = '';
     foreignExpression = '';
     nativeLang = '';
     foreignLang = '';
     description = '';
     examples = [];
+
+    constructor(id:number, bundleId: number){
+        this.id = id;
+        this.bundleId = bundleId;
+    }
 
 }

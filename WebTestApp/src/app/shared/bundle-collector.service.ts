@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Bundle } from './bundle.model';
-import { CardDetails, EmptyCard } from './card-details.model';
+import { Observable, of } from 'rxjs';
+import { Bundle, EmptyBundle } from './bundle.model';
+import { CardDetails, Card } from './card-details.model';
 import { CardDetailsService } from './card-details.service';
 
 @Injectable({
@@ -8,8 +9,11 @@ import { CardDetailsService } from './card-details.service';
 })
 export class BundleCollectorService {
 
-  bundle: Bundle = new Bundle();
-  constructor() { }
+  bundle!: Bundle;
+  constructor(private dataService: CardDetailsService) { 
+    this.bundle = new EmptyBundle();
+    this.bundle.bundleID = this.dataService.getNewBundleId();
+  }
 
   clear(){
     this.bundle.cards = [];
@@ -17,13 +21,13 @@ export class BundleCollectorService {
     this.bundle.description = '';
   };
 
-  addEmptyCard(amount?: number){
-    if( amount=== undefined){
-      amount = 1;
-    }
-    for(let i = 0; i<amount; i++){
-      this.bundle.cards.push(new EmptyCard());
-    }
+  addEmptyCard(id: number){
+
+      this.bundle.cards.push(new Card(id, this.bundle.bundleID));
+  }
+
+  deleteCard(id: number){
+    this.bundle.cards = this.bundle.cards.filter(b => b.id !== id);
   }
 
   getBundle(): Bundle{
@@ -31,22 +35,22 @@ export class BundleCollectorService {
   }
 
   updateNativeWord(cardsID: number, expression: string){
-    this.bundle.cards[cardsID-1].nativeExpression = expression;
+    this.bundle.cards.find( c => c.id === cardsID)!.nativeExpression = expression;
     console.log(cardsID+" "+expression);
   }
 
   updateForeignWord(cardsID: number, expression: string){
-    this.bundle.cards[cardsID-1].foreignExpression = expression;
+    this.bundle.cards.find( c => c.id === cardsID)!.foreignExpression = expression;
     console.log(cardsID+" "+expression);
   }
 
   updateDescription(cardsID: number, expression: string){
-    this.bundle.cards[cardsID-1].description = expression;
+    this.bundle.cards.find( c => c.id === cardsID)!.description = expression;
     console.log(cardsID+" "+expression);
   }
 
   updateExamples(cardsID: number, expression: string[]){
-    this.bundle.cards[cardsID-1].examples = expression;
+    this.bundle.cards.find( c => c.id === cardsID)!.examples = expression;
     console.log(cardsID+" "+expression);
   }
 
@@ -56,5 +60,13 @@ export class BundleCollectorService {
 
   updateBundleDescription(value: string){
     this.bundle.description = value;
+  }
+
+  updateNativeLang(value: string){
+    this.bundle.nativeLang = value;
+  }
+
+  updateForeignLang(value: string){
+    this.bundle.foreignLang = value;
   }
 }

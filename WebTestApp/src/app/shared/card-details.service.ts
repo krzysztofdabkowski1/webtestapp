@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CardDetails } from './card-details.model';
 import { Observable, of } from 'rxjs';
-import { Bundle } from './bundle.model';
+import { Bundle, EmptyBundle } from './bundle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,16 @@ export class CardDetailsService {
   bundles: Bundle[] = [
     {"name": "Fiszki #1",
       "bundleID": 1,
-      "owenerID": 1,
+      "ownerID": 1,
       "startDate": new Date("2022-01-16"),
       "updateDate": new Date("2022-01-19"),
+      "nativeLang": "pl",
+      "foreignLang": "gb",
       "description": " to są fiszki",
       "cards":[
     {
       "id": 1,
+      "bundleId": 1,
       "nativeExpression": "rzeka konstantynopolitańczykowianeczka",
       "foreignExpression": "a river",
       "nativeLang": "pl",
@@ -36,6 +39,7 @@ export class CardDetailsService {
     },
     {
       "id": 2,
+      "bundleId": 1,
       "nativeExpression": "kolejka",
       "foreignExpression": "a queue",
       "nativeLang": "pl",
@@ -49,6 +53,7 @@ export class CardDetailsService {
     },
     {
       "id": 3,
+      "bundleId": 1,
       "nativeExpression": "rodzina",
       "foreignExpression": "something special",
       "nativeLang": "pl",
@@ -74,24 +79,51 @@ export class CardDetailsService {
     return of(CARDS);
   }
 
-  getBundle(id: number): Observable<Bundle>{
-    return of(this.bundles[id] )
+  getBundle(id: number): Observable<Bundle> {
+    let searchedBundle = this.bundles.find( b => b.bundleID == id);
+    if(searchedBundle){
+      return of(searchedBundle)
+    }
+    else{
+      throw 'No bundle found';
+    }   
+  }
+
+  getBundles(): Observable<Bundle[]> {
+    if(this.bundles !== []){
+      return of(this.bundles)
+    }
+    else{
+      throw 'No bundles found';
+    }   
   }
   
-  getCardById(id: number): CardDetails{
-    return this.bundles[0].cards.filter( c => c.id == id)[0];
+  getBundleById(bundleId: number): Bundle {
+    let bundle = this.bundles.find( b => b.bundleID == bundleId);
+    if(!bundle){
+      bundle = new EmptyBundle();
+    }
+    return bundle;
   }
 
-  setCardsDescriptionById(id: number, description: string){
-    let obj: CardDetails = this.bundles[0].cards.find( c => c.id == id) as CardDetails;
-    let index = this.bundles[0].cards.indexOf(obj);
-    this.bundles[0].cards[index].description = description;
+  setCardsDescriptionById(id: number, bundleId: number, description: string){
+    let bundle = this.bundles.find( b => b.bundleID == bundleId);
+    if(bundle){
+      let card = bundle.cards.find( c => c.id == id) as CardDetails;
+      let index = bundle.cards.indexOf(card);
+      bundle.cards[index].description = description;
+    }
+    
   }
 
-  setCardsExamplesById(id: number, examples: string[]){
-    let obj: CardDetails = this.bundles[0].cards.find( c => c.id == id) as CardDetails;
-    let index = this.bundles[0].cards.indexOf(obj);
-    this.bundles[0].cards[index].examples = examples;
+  setCardsExamplesById(id: number, bundleId: number, examples: string[]){
+    console.log(id+'   '+bundleId+'    '+examples)
+    let bundle= this.bundles.find( b => b.bundleID == bundleId);
+    if(bundle){
+      let card = bundle.cards.find( c => c.id == id) as CardDetails;
+      let index = bundle.cards.indexOf(card);
+      bundle.cards[index].examples = examples;
+    }
   }
 
   addCard(card: CardDetails){
@@ -101,10 +133,14 @@ export class CardDetailsService {
   }
   
   addBundle(bundle:Bundle){
-    
-    bundle.cards.forEach((c)=>{
-      this.addCard(c);
-    })
+    bundle.startDate = new Date();
+    this.bundles.push(bundle);
+    console.log(JSON.stringify(this.bundles[1].name ))
 
+  }
+
+  getNewBundleId(){
+    let maxId:number = Math.max.apply(Math, this.bundles.map(function(c) { return c.bundleID; }))
+    return maxId + 1;
   }
 }

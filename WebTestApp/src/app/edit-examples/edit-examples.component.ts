@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { FormBuilder } from '@angular/forms';
 import { MatLine } from '@angular/material/core';
 import { HasElementRef } from '@angular/material/core/common-behaviors/color';
+import { Bundle } from '../shared/bundle.model';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 
@@ -20,6 +21,7 @@ export class EditExamplesComponent implements OnInit {
   @ViewChild('myTextArea', {static: true})
   textAreaRef!: ElementRef;
 
+  @Input() bundleId: number = 0;
   @Input() set cardId(value: number){
     this.id = value;
     this.activeEditExamples = false;
@@ -64,7 +66,7 @@ export class EditExamplesComponent implements OnInit {
     else {
       this.examples[this.exampleIndex] = this.examplesForm.controls['content'].value;
     }
-    this.dataService.setCardsExamplesById(this.id, this.examples );
+    this.dataService.setCardsExamplesById(this.id, this.bundleId,  this.examples );
     //this.activeEditExamplesOutput.emit(false);
     this.examplesForm.reset();
     this.exampleIndex = undefined;
@@ -95,13 +97,17 @@ export class EditExamplesComponent implements OnInit {
   }
 
   setExamples(){
-    let card:CardDetails = this.dataService.getCardById(this.id);
-    if(card.examples === undefined){
-      this.examples = []
+    let bundle:Bundle= this.dataService.getBundleById(this.bundleId);
+    let card = bundle.cards.find( c => c.id == this.id);
+    if(card){
+      if(card.examples === undefined){
+        this.examples = []
+      }
+      else{
+        this.examples = card.examples;
+      }
     }
-    else{
-      this.examples = card.examples;
-    }
+    
     
     this.exampleIndex = undefined;
 

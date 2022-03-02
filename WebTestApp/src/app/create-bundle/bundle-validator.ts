@@ -12,10 +12,14 @@ export class BundleValidator {
         let areAllFilled = true;
         this.bundle.cards.forEach( c => {
             if(c.nativeExpression == '' || c.foreignExpression == ''){
+                console.log(c)
                 areAllFilled = false;
             }
         })
         if(this.bundle.name==''){
+            areAllFilled = false;
+        }
+        if(this.bundle.nativeLang=='' || this.bundle.foreignLang==''){
             areAllFilled = false;
         }
         return areAllFilled;

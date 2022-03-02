@@ -28,6 +28,7 @@ export class BundleDetailsSubject {
                     this.bundleCollector.updateBundleDescription( expr);
         });
 
+
         
     }
 
@@ -40,5 +41,11 @@ export class BundleDetailsSubject {
         this.descriptionSubject.next(expr);
     }
 
+    updateNativeLang(expr: string){
+        this.bundleCollector.updateNativeLang(expr);
+    }
 
+    updateForeignLang(expr: string){
+        this.bundleCollector.updateForeignLang(expr);
+    }
 }

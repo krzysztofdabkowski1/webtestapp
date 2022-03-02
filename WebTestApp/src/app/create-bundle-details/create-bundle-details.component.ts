@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { BundleDetailsSubject } from './bundle-details-subject';
+import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'create-bundle-details',
@@ -13,6 +15,21 @@ export class CreateBundleDetailsComponent implements OnInit {
 
   createBundleDetailsForm: any;
   bundleDetailsSubject: any;
+  colorValue: string = 'primary';
+
+  languages: {'text': string, 'country': string}[] = [
+    {'text':'polski',
+     'country': 'pl'},
+     {'text':'angielski',
+     'country': 'gb'},
+     {'text':'niemiecki',
+     'country': 'de'},
+     {'text':'francuski',
+     'country': 'fr'}
+  ]
+  selectedNativeLanguage: string = '';
+  selectedForeignLanguage: string = '';
+  @ViewChild('select' , {static: false}) select!: ElementRef;
 
   @Input() set validate(subject: Subject<Boolean>){
     subject.subscribe(
@@ -22,7 +39,8 @@ export class CreateBundleDetailsComponent implements OnInit {
         r.classList.add('warning');
       })
       let arrReq = Array.from(required);
-      arrReq.find( r => r.value=='')?.focus()
+      this.colorValue = 'warn';
+      arrReq.find( r => r.value=='')?.focus();
     })
   }
   
@@ -43,7 +61,6 @@ export class CreateBundleDetailsComponent implements OnInit {
     const descriptionTextArea = document.querySelector('#bundle-description-textarea') as HTMLTextAreaElement;
     const descriptionP = document.querySelector('#bundle-description') as HTMLElement;
 
-  
     
 
     nameTextArea.addEventListener('input', ()=>{
@@ -74,6 +91,14 @@ export class CreateBundleDetailsComponent implements OnInit {
 
   detectBundleDescriptionChange(value: string){
     this.bundleDetailsSubject.updateBundleDescription(value);
+  }
+
+  detectNativeLangChange(value: string){
+    this.bundleDetailsSubject.updateNativeLang(value);
+  }
+
+  detectForeignLangChange(value: string){
+    this.bundleDetailsSubject.updateForeignLang(value);
   }
 
 }

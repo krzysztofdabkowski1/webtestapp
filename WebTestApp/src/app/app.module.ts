@@ -19,6 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { CreateBundleDetailsComponent } from './create-bundle-details/create-bundle-details.component';
 import { BundlesListComponent } from './bundles-list/bundles-list.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,9 @@ import { BundlesListComponent } from './bundles-list/bundles-list.component';
     AppRoutingModule,
     AutosizeModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

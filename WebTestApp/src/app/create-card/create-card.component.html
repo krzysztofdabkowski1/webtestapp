@@ -3,7 +3,7 @@
     <form  class="form" [formGroup]="createCardForm" (ngSubmit)="ngOnSubmit()">
         <div class="create-content"> 
             <div class="create-card-number"> 
-                <h3>{{numberOfCard}}</h3>     
+                <h3>{{displayNumberOfCard}}</h3>     
             </div>
             <div class="native-word">
                 <textarea #nativeWord id="native-textarea" class="content-input required"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" (input)="detectNativeWordChange(nativeWord.value)" autosize required>
