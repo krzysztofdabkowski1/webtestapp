@@ -34,13 +34,19 @@ export class CreateBundleDetailsComponent implements OnInit {
   @Input() set validate(subject: Subject<Boolean>){
     subject.subscribe(
     ()=>{
-      const required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
+      let required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
       required.forEach( (r)=>{
         r.classList.add('warning');
       })
       let arrReq = Array.from(required);
       this.colorValue = 'warn';
       arrReq.find( r => r.value=='')?.focus();
+
+      let requiredLabel:HTMLElement[] = document.querySelectorAll('.label') as unknown as HTMLElement[];
+      requiredLabel.forEach( (a) =>{
+        console.log('red')
+        a.style.color = "red";
+      })
     })
   }
   

@@ -49,8 +49,8 @@
                       
                 
                       <mat-form-field class="lang-select" appearance="fill" [color]="colorValue">
-                        <mat-label class="label">Język obcy</mat-label>
-                        <mat-select  panelClass="panel" [(value)]="selectedForeignLanguage" (selectionChange)="detectForeignLangChange($event.value.country)">
+                        <mat-label *ngIf="foreignSelect.value==''" class="label">Język obcy</mat-label>
+                        <mat-select #foreignSelect panelClass="panel" [(value)]="selectedForeignLanguage" (selectionChange)="detectForeignLangChange($event.value.country)">
                           
                           <mat-option [value]="lang" *ngFor="let lang of languages" [value]="lang">
                             <img class="countryFlagForeign" src="assets/4x3/{{lang.country}}.svg" style="height:20px; width: 25px;">
@@ -58,6 +58,9 @@
                         </mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <div *ngIf="!foreignSelect.focused" class="select-underline" style="width: 100%;"></div>
+                      <div *ngIf="foreignSelect.focused" class="linear-underline" style="width: 100%; "></div>
+                      <div *ngIf="foreignSelect.value!==''" id="bundle-native-lang">Język obcy</div>
                   </div>
                   
                 </div>
