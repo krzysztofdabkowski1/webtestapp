@@ -6,15 +6,24 @@
                 <h3>{{displayNumberOfCard}}</h3>     
             </div>
             <div class="native-word">
+               
                 <textarea #nativeWord id="native-textarea" class="content-input required"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" (input)="detectNativeWordChange(nativeWord.value)" autosize required>
                 </textarea>
+                 
                 <div class="linear-underline"></div>
-                <div id="native-p">wyrażenie</div>
+                
+                <p id="native-p">wyrażenie</p>
+
             </div>
             <div class="foreign-word">
+                
                 <textarea #foreignWord id="foreign-textarea" class="content-input required"  type="text" rows="1" formControlName="foreignWord" placeholder="tłumaczenie" (input)="detectForeignWordChange(foreignWord.value)"autosize required>
-                </textarea><div class="linear-underline"></div>
+                </textarea>
+                
+                <div class="linear-underline"></div>
+                
                 <p id="foreign-p" >tłumaczenie</p>
+
             </div>
             <div class="addNotes">
                 <mat-icon class="editBtn" (click)="showCardDescription()">note_add</mat-icon>

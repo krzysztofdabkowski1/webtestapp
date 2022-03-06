@@ -28,7 +28,7 @@
                     </div>
                   </div>
                   <div class="col-4">
-                    <mat-form-field  appearance="fill" [color]="colorValue">
+                    <mat-form-field class="lang-select" appearance="fill" [color]="colorValue">
                         
                         <mat-select #select panelClass="panel" 
                                     [(value)]="selectedNativeLanguage" 
@@ -44,7 +44,8 @@
                     </mat-form-field>
                     <div *ngIf="!select.focused" class="select-underline" style="width: 100%;"></div>
                     <div *ngIf="select.focused" class="linear-underline" style="width: 100%; "></div>
-                    <div *ngIf="select.value!==''" id="bundle-native-lang">Język ojczysty</div>
+                    <div *ngIf="select.value!==''" class="underline-label">Język ojczysty</div>
+                    <div *ngIf="select.value===''" class="underline-label"></div>
                       
                       
                 
@@ -60,7 +61,8 @@
                       </mat-form-field>
                       <div *ngIf="!foreignSelect.focused" class="select-underline" style="width: 100%;"></div>
                       <div *ngIf="foreignSelect.focused" class="linear-underline" style="width: 100%; "></div>
-                      <div *ngIf="foreignSelect.value!==''" id="bundle-native-lang">Język obcy</div>
+                      <div *ngIf="foreignSelect.value!==''" class="underline-label">Język obcy</div>
+                       <div *ngIf="select.value===''" class="underline-label"></div>
                   </div>
                   
                 </div>
