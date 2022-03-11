@@ -121,6 +121,12 @@ export class CreateBundleComponent implements OnInit {
     },1000);
     
   }
+
+  deleteRequest(event:any, id:number){
+    if(event){
+      this.deleteCard(id);
+    }
+  }
 }
 
 

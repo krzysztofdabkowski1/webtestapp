@@ -5,38 +5,71 @@
             <div class="create-card-number"> 
                 <h3>{{displayNumberOfCard}}</h3>     
             </div>
-            <div class="native-word">
-               
-                <textarea #nativeWord id="native-textarea" class="content-input required"  type="text" rows="1" formControlName="nativeWord" placeholder="wyrażenie" (input)="detectNativeWordChange(nativeWord.value)" autosize required>
-                </textarea>
-                 
-                <div class="linear-underline"></div>
-                
-                <p id="native-p">wyrażenie</p>
+            <mat-form-field class="native-word" appearance="fill">
+              <mat-label class="label">wyrażenie</mat-label>
+              <input matInput
+              #nativeWord="matInput"
+              class="content-input"
+              [formControl]="nativeWordFormControl"
+              [errorStateMatcher]="matcher"
+              (input)="detectNativeWordChange(nativeWord.value)" 
+              maxLength="50">
+              <mat-error *ngIf="nativeWordFormControl.hasError('required')">
+                To pole jest <strong>wymagane</strong>
+              </mat-error>
+            <div *ngIf="!nativeWord.focused" class="blank-underline" style="width: 100%;"></div>
+            <div *ngIf="nativeWord.focused" class="linear-underline" style="width: 100%; "></div>
+            
+            </mat-form-field>
+            
+            <div class="divide-line"></div>
 
-            </div>
-            <div class="foreign-word">
-                
-                <textarea #foreignWord id="foreign-textarea" class="content-input required"  type="text" rows="1" formControlName="foreignWord" placeholder="tłumaczenie" (input)="detectForeignWordChange(foreignWord.value)"autosize required>
-                </textarea>
-                
-                <div class="linear-underline"></div>
-                
-                <p id="foreign-p" >tłumaczenie</p>
+            <mat-form-field class="foreign-word" appearance="fill">
+              <mat-label class="label">tłumaczenie</mat-label>
+              <input matInput
+              #foreignWord="matInput"
+              class="content-input"
+              [formControl]="foreignWordFormControl"
+              [errorStateMatcher]="matcher"
+              (input)="detectForeignWordChange(nativeWord.value)" 
+              maxLength="50">
+              <mat-error *ngIf="foreignWordFormControl.hasError('required')">
+                To pole jest <strong>wymagane</strong>
+              </mat-error>
+            <div *ngIf="!foreignWord.focused" class="blank-underline" style="width: 100%;"></div>
+            <div *ngIf="foreignWord.focused" class="linear-underline" style="width: 100%; "></div>
+            
+            </mat-form-field>
 
+            <div class="delete-card">
+              <mat-icon class="deleteBtn" (click)="deleteThisCard()">delete</mat-icon>
             </div>
+            <div class="break"></div>
             <div class="addNotes">
-                <mat-icon class="editBtn" (click)="showCardDescription()">note_add</mat-icon>
+                <mat-icon *ngIf="!areNotesOpen" class="editBtn" (click)="showCardDescription()">note_add</mat-icon>
+                <mat-icon *ngIf="areNotesOpen" class="editBtn" (click)="showCardDescription()">keyboard_arrow_up</mat-icon>
             </div>
         </div>
-        <div class="cardDescription">
-            <div class='description'>
-                <div class="descriptionContent">
-                        <textarea #description id="description-textarea" class="content-input-description"  type="text" formControlName="description" rows="3" placeholder="opis" (input)="detectDescriptionChange(description.value)" autosize>
-                        </textarea>
-                        <div class="linear-underline"></div>
-                        <p id="description-p" >opis</p>
-                </div>
+        <div class="cardDescription" [ngClass]="areNotesOpen ? 'showCardDescription' : ' showCardDescription hideCardDescription' ">
+            
+          <div class='description'>
+            <mat-form-field class="descriptionContent" appearance="fill">
+              <mat-label class="label">Opis</mat-label>
+              <textarea matInput
+              #description="matInput"
+              class="content-input-description"
+              [formControl]="descriptionFormControl"
+              [errorStateMatcher]="matcher"
+              (input)="detectDescriptionChange(nativeWord.value)" 
+              rows="3"
+              maxLength="500"
+              autosize>
+              </textarea>
+            <div *ngIf="!description.focused" class="blank-underline" style="width: 100%;"></div>
+            <div *ngIf="description.focused" class="linear-underline" style="width: 100%; "></div>
+            
+            </mat-form-field>
+                
             </div>
             <div class='examples'>
 
@@ -52,37 +85,54 @@
                           <div *ngIf="i!=exampleIndex" class="cell">
                             {{e}} 
                           </div>
-                          <div *ngIf="i==exampleIndex" class="cell" style="flex-direction: column;">
-                                  <textarea  id="edit-example-textarea" class="content-input" style="width:100%" type="text" rows="1" formControlName="example" placeholder="przykład" autosize>
-                                  </textarea>
-                                  <div class="linear-underline" style="width:100%;"></div>
-                                  <div class="edit-buttons">
-                                    <mat-icon class="iconBtn" (click)="saveEdit(i)">check</mat-icon>
-                                    <mat-icon class="iconBtn" (click)="cancelEdit()">cancel</mat-icon>
-                                  </div>
-                              
+                          
+                          <mat-form-field *ngIf="i==exampleIndex" class="cell" appearance="fill">
+                            <mat-label class="label">Przykład</mat-label>
+                            <textarea matInput
+                            id="edit-example-textarea"
+                            #editExample="matInput"
+                            class="content-input"
+                            [formControl]="exampleFormControl"
+                            [errorStateMatcher]="matcher"
+                            maxLength="500"
+                            [placeholder]="foreignWord.value ? 'Dodaj przykład zdania z wyrażeniem &quot;'+ foreignWord.value+'&quot;' : 'Dodaj przykład'"
+                            rows="1"
+                            autosize>
+                            </textarea>
+                            <div *ngIf="!editExample.focused" class="blank-underline" style="width: 100%;"></div>
+                            <div *ngIf="editExample.focused" class="linear-underline" style="width: 100%; "></div>
+                            <div class="example-buttons">
+                              <mat-icon class="iconBtn" (click)="saveEdit(i)">check</mat-icon>
+                              <mat-icon class="iconBtn" (click)="cancelEdit()">cancel</mat-icon>
                             </div>
+                          </mat-form-field>
 
                         </div>
                         </ng-container>
                       </div>
                   
-                    
-                  
-                    <div id="new-example">
-                      
-                        <textarea id="example-textarea" class="content-input" type="text" rows="1" formControlName="example" placeholder="dodaj przykład" autosize>
+                      <mat-form-field *ngIf="exampleIndex==undefined" class="new-example" appearance="fill">
+                        <mat-label class="label">Przykład</mat-label>
+                        <textarea matInput
+                        id="new-example-textarea"
+                        #newExample="matInput"
+                        class="content-input"
+                        [formControl]="exampleFormControl"
+                        [errorStateMatcher]="matcher"
+                        maxLength="500"
+                        [placeholder]="foreignWord.value ? 'Dodaj przykład zdania z wyrażeniem &quot;'+ foreignWord.value+'&quot;' : 'Dodaj przykład'"
+                        rows="1"
+                        autosize>
                         </textarea>
-                        <div class="linear-underline"></div>
-                        <p id="example-p">przykład</p>
-                        <div class="example-buttons">
-                            <mat-icon class="iconBtn" (click)="addExample()">check</mat-icon>
-                            <mat-icon class="iconBtn" (click)="cancel()">cancel</mat-icon>
-                         </div>
-                        
-                      
+                      <div *ngIf="!newExample.focused" class="blank-underline" style="width: 100%;"></div>
+                      <div *ngIf="newExample.focused" class="linear-underline" style="width: 100%; "></div>
+                      <div class="example-buttons">
+                        <mat-icon class="iconBtn" (click)="addExample()">check</mat-icon>
+                        <mat-icon class="iconBtn" (click)="cancel()">cancel</mat-icon>
+                     </div>
+                      </mat-form-field>
                   
-                    </div>
+            
                   
                   </div>
                 

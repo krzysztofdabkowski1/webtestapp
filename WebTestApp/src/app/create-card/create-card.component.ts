@@ -1,10 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { CardDetailsService } from '../shared/card-details.service';
 import { CardSubject } from './card-subject';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  private _failedSubmit: Boolean | undefined;
+  setFailedSubmit(value: Boolean){
+    this._failedSubmit = value;
+  }
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted || this._failedSubmit;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-create-card',
@@ -15,7 +28,14 @@ export class CreateCardComponent implements OnInit {
   createCardForm: any;
   examples!: string[];
   id!: number;
+  areNotesOpen: boolean = false;
   exampleIndex!: number | undefined;
+  @Output() deleteThisCardEvent = new EventEmitter<boolean>();
+  nativeWordFormControl = new FormControl('', [Validators.required, Validators.maxLength(50)]);
+  foreignWordFormControl = new FormControl('',[Validators.required, Validators.maxLength(50)]);
+  descriptionFormControl = new FormControl('', [ Validators.maxLength(500)]);
+  exampleFormControl = new FormControl('',[ Validators.maxLength(150)])
+  matcher = new MyErrorStateMatcher();
 
   @Input() numberOfCard: number | undefined;
   @Input() displayNumberOfCard: number | undefined;
@@ -23,13 +43,8 @@ export class CreateCardComponent implements OnInit {
 
   @Input() set validate(subject: Subject<Boolean>){
     subject.subscribe(
-    ()=>{
-      const required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
-      required.forEach( (r)=>{
-        r.classList.add('warning');
-      })
-      let arrReq = Array.from(required);
-      arrReq.find( r => r.value=='')?.focus()
+    (value)=>{
+      this.matcher.setFailedSubmit(value);
     })
   }
   constructor(
@@ -60,27 +75,7 @@ export class CreateCardComponent implements OnInit {
     if(this.numberOfCard && this.displayNumberOfCard){
 
 
-    foreignTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
-      if(this.displayNumberOfCard){
-        if(foreignTextArea[this.displayNumberOfCard-1].value.length!==0){
-          foreignP[this.displayNumberOfCard-1].style.visibility = "visible";
-        }
-        else{
-          foreignP[this.displayNumberOfCard-1].style.visibility = "hidden";
-        }
-      } 
-    });
-
-    nativeTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
-      if(this.displayNumberOfCard){
-      if(nativeTextArea[this.displayNumberOfCard-1].value.length!==0){
-        nativeP[this.displayNumberOfCard-1].style.visibility = "visible";
-      }
-      else{
-        nativeP[this.displayNumberOfCard-1].style.visibility = "hidden";
-      }
-    }
-    });
+    
 
     descriptionTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
       if(this.displayNumberOfCard){
@@ -89,17 +84,6 @@ export class CreateCardComponent implements OnInit {
       }
       else{
         descriptionP[this.displayNumberOfCard-1].style.visibility = "hidden";
-      }
-    }
-    });
-
-    exampleTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
-      if(this.displayNumberOfCard){
-      if(exampleTextArea[this.displayNumberOfCard-1].value.length!==0){
-        exampleP[this.displayNumberOfCard-1].style.visibility = "visible";
-      }
-      else{
-        exampleP[this.displayNumberOfCard-1].style.visibility = "hidden";
       }
     }
     });
@@ -128,46 +112,33 @@ export class CreateCardComponent implements OnInit {
   }
 
   cancel() {
-    this.createCardForm.controls['example'].setValue('');
-    const exampleP = document.querySelector('#example-p') as HTMLElement;
-    exampleP.style.visibility = 'hidden'
-    
+    this.exampleFormControl.setValue('');
   }
 
+  deleteThisCard(){
+    this.deleteThisCardEvent.emit(true);
+  }
   showCardDescription(){
-    if(this.numberOfCard){
-      const cardDesc:HTMLDivElement[] = document.querySelectorAll('.cardDescription') as unknown as HTMLDivElement[];
-      if( !cardDesc[this.numberOfCard-1].classList.contains('showCardDescription')){
-          cardDesc[this.numberOfCard-1].classList.toggle('showCardDescription');
-          
-      }
-      else{
-          cardDesc[this.numberOfCard-1].classList.toggle('hideCardDescription'); 
-    
-      }
-    }
-
+    this.areNotesOpen = !this.areNotesOpen;
   }
 
   cancelEdit() {
     this.exampleIndex = undefined;
-    this.createCardForm.controls['example'].setValue('');
-    this.showExampleInput();
+    this.exampleFormControl.setValue('');
   }
 
   saveEdit(index: number){
-      this.examples[index] = this.createCardForm.controls['example'].value;
+      this.examples[index] = this.exampleFormControl.value;
     
-    this.createCardForm.controls['example'].setValue('');
+    this.exampleFormControl.setValue('');
     this.exampleIndex = undefined;
-    this.showExampleInput();
     this.changedExamples();
   }
   addExample(){
-    const exampleP = document.querySelector('#example-p') as HTMLElement;
-    exampleP.style.visibility = "hidden";
-    this.examples.push(this.createCardForm.controls['example'].value);
-    this.createCardForm.controls['example'].setValue('');
+   
+    console.log(this.exampleFormControl.value)
+    this.examples.push(this.exampleFormControl.value);
+    this.exampleFormControl.setValue('');
     this.changedExamples();
   }
   deleteExample(index: number){
@@ -177,10 +148,7 @@ export class CreateCardComponent implements OnInit {
 
   editExample(index: number){
     this.exampleIndex = index;
-    this.createCardForm.controls['example'].setValue(this.examples[this.exampleIndex]);
-    this.hideExampleInput();
-    const exampleP = document.querySelector('#example-p') as HTMLElement;
-    exampleP.style.visibility = 'hidden'
+    this.exampleFormControl.setValue(this.examples[this.exampleIndex]);
   }
 
 
@@ -189,16 +157,6 @@ export class CreateCardComponent implements OnInit {
     this.exampleIndex = undefined;
 
   }
-
-  hideExampleInput(){
-    const newExample = document.querySelector('#new-example') as HTMLElement;
-    newExample.style.display = 'none';
-  }
-  showExampleInput(){
-    const newExample = document.querySelector('#new-example') as HTMLElement;
-    newExample.style.display = 'flex';
-  }
-
 
   detectNativeWordChange(expr: string){
     this.cardSubject.updateNativeWord(expr);

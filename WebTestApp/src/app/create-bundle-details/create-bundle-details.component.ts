@@ -6,6 +6,17 @@ import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { BundleDetailsSubject } from './bundle-details-subject';
 import {ErrorStateMatcher} from '@angular/material/core';
 
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  private _failedSubmit: Boolean | undefined;
+  setFailedSubmit(value: Boolean){
+    this._failedSubmit = value;
+  }
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted || this._failedSubmit;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 @Component({
   selector: 'create-bundle-details',
   templateUrl: './create-bundle-details.component.html',
@@ -17,7 +28,10 @@ export class CreateBundleDetailsComponent implements OnInit {
   bundleDetailsSubject: any;
   colorValue: string = 'primary';
 
-  doc = document;
+  nameFormControl = new FormControl('', [Validators.required, Validators.maxLength(30)]);
+  nativeLanguageFormControl = new FormControl('', [Validators.required]);
+  foreignLanguageFormControl = new FormControl('', [Validators.required]);
+  matcher = new MyErrorStateMatcher();
 
   languages: {'text': string, 'country': string}[] = [
     {'text':'polski',
@@ -37,19 +51,10 @@ export class CreateBundleDetailsComponent implements OnInit {
     subject.subscribe(
     (value)=>{
       if(value){
-        let required:HTMLTextAreaElement[] = document.querySelectorAll('.required') as unknown as HTMLTextAreaElement[];
-        required.forEach( (r)=>{
-        r.classList.add('warning');
-        })
-        let arrReq = Array.from(required);
-        this.colorValue = 'warn';
-        arrReq.find( r => r.value=='')?.focus();
-
-        let requiredLabel:HTMLElement[] = document.querySelectorAll('.label') as unknown as HTMLElement[];
-        requiredLabel.forEach( (a) =>{
-          console.log('red')
-          a.style.color = "red";
-        })
+        this.matcher.setFailedSubmit(value);
+        if(this.matcher.isErrorState(this.nameFormControl,null)){
+          //
+        }
       }
       
     })
@@ -74,26 +79,27 @@ export class CreateBundleDetailsComponent implements OnInit {
 
     
 
-    nameTextArea.addEventListener('input', ()=>{
-        if(nameTextArea.value.length!==0){
-          nameP.style.visibility = "visible";
-        }
-        else{
-          nameP.style.visibility = "hidden";
-        }
-    });
+    // nameTextArea.addEventListener('input', ()=>{
+    //     if(nameTextArea.value.length!==0){
+    //       nameP.style.visibility = "visible";
+    //     }
+    //     else{
+    //       nameP.style.visibility = "hidden";
+    //     }
+    // });
 
-    descriptionTextArea.addEventListener('input', ()=>{
-      if(descriptionTextArea.value.length!==0){
-        descriptionP.style.visibility = "visible";
-      }
-      else{
-        descriptionP.style.visibility = "hidden";
-      }
-  });
+  //   descriptionTextArea.addEventListener('input', ()=>{
+  //     if(descriptionTextArea.value.length!==0){
+  //       descriptionP.style.visibility = "visible";
+  //     }
+  //     else{
+  //       descriptionP.style.visibility = "hidden";
+  //     }
+  // });
   }
 
   ngOnSubmit(): void {
+
   }
 
   detectBundleNameChange(value: string){

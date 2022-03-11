@@ -1,37 +1,51 @@
 <div class="create-bundle-details">
-    <form  class="form" [formGroup]="createBundleDetailsForm" (ngSubmit)="ngOnSubmit()">
+    <form  class="form"  (ngSubmit)="ngOnSubmit()">
         <div class="create-content"> 
             
             <div class="container">
                 <div class="row">
-                  <div class="col-8" style="height: 100%;">
-                    <div class="bundle-name">
-                        <textarea #bundleName id="bundle-name-textarea" 
-                        class="content-input required"  
-                        type="text" 
-                        rows="1" 
-                        formControlName="bundleName" 
-                        placeholder="tytuł zestawu" 
+                  <div class="col-7" style="height: 100%;">
+                      <mat-form-field class="bundle-name" appearance="fill">
+                        <mat-label class="label">Tytuł zestawu</mat-label>
+                        <input matInput
+                        #bundleName="matInput"
+                        class="content-input"
+                        [formControl]="nameFormControl"
+                        [errorStateMatcher]="matcher"
                         (input)="detectBundleNameChange(bundleName.value)"  
-                        maxLength="100" 
-                        autosize required>
-                        </textarea>
-                        <div class="linear-underline"></div>
-                        <div id="bundle-name">tytuł zestawu</div>
-                    </div>
-
-                    <div class="bundle-description" style="height: 100%;">
-                        <textarea #bundleDescription id="bundle-description-textarea" class="content-input-description"  type="text" rows="3" formControlName="bundleDescription" placeholder="opis" (input)="detectBundleDescriptionChange(bundleDescription.value)" autosize required>
-                        </textarea>
-                        <div class="linear-underline"></div>
-                        <div id="bundle-description">opis</div>
-                    </div>
+                        maxLength="50"
+                        placeholder='np. "Fiszki #1"'
+                        id="bundle-name-input">
+                        <mat-error *ngIf="nameFormControl.hasError('required')">
+                          Tytuł jest <strong>wymagany</strong>
+                        </mat-error>
+                      <div *ngIf="!bundleName.focused" class="select-underline" style="width: 100%;"></div>
+                      <div *ngIf="bundleName.focused" class="linear-underline" style="width: 100%; "></div>
+                      
+                      </mat-form-field>
+                    <mat-form-field #bundleDescriptionForm class="bundle-description" appearance="fill">
+                      <mat-label class="label">Opis</mat-label>
+                      <textarea matInput
+                      #bundleDescription="matInput"
+                      placeholder="Dodaj opis" 
+                      type="text"
+                      (input)="detectBundleDescriptionChange(bundleDescription.value)" 
+                      class="content-input-description"
+                      id="bundle-description-textarea"
+                      rows="3"
+                      autosize
+                      ></textarea>
+                      <div *ngIf="!bundleDescription.focused" class="select-underline" style="width: 100%;"></div>
+                      <div *ngIf="bundleDescription.focused" class="linear-underline" style="width: 100%; "></div>
+                    </mat-form-field> 
                   </div>
-                  <div class="col-4">
+                  <div class="col-5">
                     <mat-form-field class="lang-select" appearance="fill" [color]="colorValue">
                         
                         <mat-select #select panelClass="panel" 
                                     [(value)]="selectedNativeLanguage" 
+                                    [formControl]="nativeLanguageFormControl"
+                                    [errorStateMatcher]="matcher"
                                     (selectionChange)="detectNativeLangChange($event.value.country)">
                           
                           <mat-option [value]="lang" *ngFor="let lang of languages" [value]="lang">
@@ -39,30 +53,38 @@
                             {{ lang.text }}
                         </mat-option>
                         </mat-select>
-                        <mat-label *ngIf="select.value==''" class="label" >Język ojczysty</mat-label>
-                        
+                        <mat-label class="label" >Język ojczysty</mat-label>
+                        <mat-error *ngIf="nativeLanguageFormControl.hasError('required')">
+                          Wskaż język <strong>ojczysty</strong>
+                        </mat-error>
                     </mat-form-field>
                     <div *ngIf="!select.focused" class="select-underline" style="width: 100%;"></div>
                     <div *ngIf="select.focused" class="linear-underline" style="width: 100%; "></div>
-                    <div *ngIf="select.value!==''" class="underline-label">Język ojczysty</div>
-                    <div *ngIf="select.value===''" class="underline-label"></div>
+                  
                       
                       
                 
-                      <mat-form-field class="lang-select" appearance="fill" [color]="colorValue">
-                        <mat-label *ngIf="foreignSelect.value==''" class="label">Język obcy</mat-label>
-                        <mat-select #foreignSelect panelClass="panel" [(value)]="selectedForeignLanguage" (selectionChange)="detectForeignLangChange($event.value.country)">
+                      <mat-form-field id="foreign-select-id" class="lang-select" appearance="fill" [color]="colorValue">
+                        
+                        <mat-select #foreignSelect
+                         panelClass="panel"
+                         [(value)]="selectedForeignLanguage" 
+                         (selectionChange)="detectForeignLangChange($event.value.country)"
+                         [formControl]="foreignLanguageFormControl"
+                         [errorStateMatcher]="matcher">
                           
                           <mat-option [value]="lang" *ngFor="let lang of languages" [value]="lang">
                             <img class="countryFlagForeign" src="assets/4x3/{{lang.country}}.svg" style="height:20px; width: 25px;">
                             {{ lang.text }}
                         </mat-option>
                         </mat-select>
+                        <mat-label class="label">Język obcy</mat-label>
+                        <mat-error *ngIf="foreignLanguageFormControl.hasError('required')">
+                          Wskaż język <strong>obcy</strong>
+                        </mat-error>
                       </mat-form-field>
                       <div *ngIf="!foreignSelect.focused" class="select-underline" style="width: 100%;"></div>
                       <div *ngIf="foreignSelect.focused" class="linear-underline" style="width: 100%; "></div>
-                      <div *ngIf="foreignSelect.value!==''" class="underline-label">Język obcy</div>
-                       <div *ngIf="select.value===''" class="underline-label"></div>
                   </div>
                   
                 </div>

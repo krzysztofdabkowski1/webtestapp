@@ -21,7 +21,7 @@ import { CreateBundleDetailsComponent } from './create-bundle-details/create-bun
 import { BundlesListComponent } from './bundles-list/bundles-list.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field'
-
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +47,9 @@ import {MatFormFieldModule} from '@angular/material/form-field'
     MatIconModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

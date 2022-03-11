@@ -8,13 +8,14 @@
             class="create-card"
             [numberOfCard]="b.id"
             [displayNumberOfCard]="b.displayId"
+            (deleteThisCardEvent)="deleteRequest($event, b.id)"
             [validate]="validate">
         </app-create-card>
-        <mat-icon class="iconBtn" (click)="deleteCard(b.id)">delete</mat-icon>  
     </div>
     
     
 </div>
+<div  class="add-card-container"></div>
 <button class="btn btn-info" (click)="addCard()">dodaj kartę</button>
 <div class="buttons">
     <button class="btn btn-info" type="button" (click)="submit()">Zapisz</button>
