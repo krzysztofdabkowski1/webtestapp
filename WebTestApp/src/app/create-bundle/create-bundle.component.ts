@@ -16,6 +16,7 @@ import { Bundle } from '../shared/bundle.model';
 })
 export class CreateBundleComponent implements OnInit {
 
+  hoverAddCard: Boolean = false;
 
   bundleCardsID: {'id':number,'displayId':number}[] = [];
 

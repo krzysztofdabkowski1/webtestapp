@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Bundle } from '../shared/bundle.model';
-
+import {NestedTreeControl} from '@angular/cdk/tree';
+import {MatTreeNestedDataSource} from '@angular/material/tree';
+import { FolderNode, FOLDER_DATA } from './folder-node';
 import { CardDetailsService } from '../shared/card-details.service';
 
 @Component({
@@ -12,10 +14,15 @@ import { CardDetailsService } from '../shared/card-details.service';
 export class BundlesListComponent implements OnInit {
 
   bundles!:Bundle[] ;
-  constructor(
-    private router: Router,
-    private dataService: CardDetailsService
-  ) { }
+  treeControl = new NestedTreeControl<FolderNode>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<FolderNode>();
+
+  constructor(private router: Router,
+              private dataService: CardDetailsService){
+    this.dataSource.data = FOLDER_DATA;
+   }
+
+   hasChild = (_: number, node: FolderNode) => !!node.children && node.children.length > 0;
 
   ngOnInit(): void {
     this.dataService.getBundles().subscribe( (bundles) => {

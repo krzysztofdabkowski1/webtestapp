@@ -1,46 +1,95 @@
- <div class="bundles-container" >
 
-    <div class="bundles-nav">
-        <div class="bundles-nav-section-title">
-            Ostatnie
-        </div>
-        <div class="bundles-nav-section-line"></div>
-    </div>
- <div class="list" *ngFor="let b of bundles"> 
-    <div class="bundle" [routerLink]="['/bundle', b.bundleID]">
-        <div class="bundle-header">
-            <h2 class="title">{{b.name}} <span class="number-of-cards">/catalog</span></h2>
-            <div class="details">
-                <span class="number-of-cards"> {{b.cards.length}} karty </span>
-                <span class="date">{{getDate(b)}}</span>
+
+
+    <mat-drawer-container>
+        <mat-drawer mode="side" opened>
+            <div class="tree-header">
+                <span>Moje zasoby</span>
             </div>
-            
-        </div>
-        <div class="linear-underline"></div>
-    </div>
-    
-</div>
-<div class="bundles-nav">
-    <div class="bundles-nav-section-title">
-        Styczeń
-    </div>
-    <div class="bundles-nav-section-line"></div>
-</div>
-
-
-<div class="list" *ngFor="let id of bundles"> 
-    <div class="bundle">
-        <div class="bundle-header">
-            <h2 class="title">Bundle title is here <span class="number-of-cards">/other_catalog</span></h2>
-            <div class="details">
-                <span class="number-of-cards"> 34 karty</span>
-                <span class="date">Aktualizowano: 4 stycznia 2022</span>
+            <div class="bundles-nav-section-line"></div>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="folders-tree">
+                <!-- This is the tree node template for leaf nodes -->
+                <!-- There is inline padding applied to this node using styles.
+                  This padding value depends on the mat-icon-button width. -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                    <div class="mat-tree-node-content">
+                        <mat-icon>library_books</mat-icon>
+                        <span class="node-title">{{node.name}} </span>
+                    </div>
+                     
+                </mat-tree-node>
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                    
+                      <mat-flat-button mat-icon-button matTreeNodeToggle
+                              [attr.aria-label]="'Toggle ' + node.name">
+                        <div class="node-button-content">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                              </mat-icon>
+                              <mat-icon class="node-title-icon">folder</mat-icon>
+                              <span class="node-title"> {{node.name}} </span>
+                        </div>
+                        
+                      </mat-flat-button>
+                      
+                    
+                    <!-- There is inline padding applied to this div using styles.
+                        This padding value depends on the mat-icon-button width.  -->
+                    <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                        role="group">
+                      <ng-container matTreeNodeOutlet></ng-container>
+                  </div>
+                </mat-nested-tree-node>
+              </mat-tree>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="bundles-container"> 
+            <div class="bundles-nav">
+                <div class="bundles-nav-section-title">
+                    Ostatnie
+                </div>
+                <div class="bundles-nav-section-line"></div>
             </div>
-            
+            <div class="list" *ngFor="let b of bundles"> 
+                <div class="bundle" [routerLink]="['/bundle', b.bundleID]">
+                    <div class="bundle-header">
+                        <h2 class="title">{{b.name}} <span class="number-of-cards">/catalog</span></h2>
+                        <div class="details">
+                            <span class="number-of-cards"> {{b.cards.length}} karty </span>
+                            <span class="date">{{getDate(b)}}</span>
+                        </div>
+                    
+                    </div>
+                <div class="linear-underline"></div>
+                </div>
+            </div>
+            <div class="bundles-nav">
+                <div class="bundles-nav-section-title">
+                    Styczeń
+                </div>
+                <div class="bundles-nav-section-line"></div>
+            </div>
+        
+        
+            <div class="list" *ngFor="let id of bundles"> 
+                <div class="bundle">
+                    <div class="bundle-header">
+                        <h2 class="title">Bundle title is here <span class="number-of-cards">/other_catalog</span></h2>
+                        <div class="details">
+                            <span class="number-of-cards"> 34 karty</span>
+                            <span class="date">Aktualizowano: 4 stycznia 2022</span>
+                        </div>
+                        
+                    </div>
+                    <div class="linear-underline"></div>
+                </div>
+                
+            </div>
         </div>
-        <div class="linear-underline"></div>
-    </div>
-    
-</div>
+        </mat-drawer-content>
+    </mat-drawer-container>
 
-</div>
+    
+
+

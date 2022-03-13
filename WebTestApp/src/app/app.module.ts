@@ -22,6 +22,9 @@ import { BundlesListComponent } from './bundles-list/bundles-list.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTreeModule} from '@angular/material/tree';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,9 @@ import { MatInputModule } from '@angular/material/input';
     MatSnackBarModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule,
+    MatTreeModule,
     
   ],
   providers: [],

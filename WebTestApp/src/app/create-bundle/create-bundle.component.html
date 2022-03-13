@@ -15,10 +15,21 @@
     
     
 </div>
-<div  class="add-card-container"></div>
-<button class="btn btn-info" (click)="addCard()">dodaj kartę</button>
+<div  class="add-card-container">
+    <div (mouseover)="hoverAddCard=true" (mouseout)="hoverAddCard=false" class="add-card-content" (click)="addCard()">
+        <div class="add-card-title-container">
+            <div class="add-card-title">
+                <mat-icon >add</mat-icon>
+                <span>Dodaj kartę</span>
+            </div>
+            <div *ngIf="!hoverAddCard" class="select-underline"></div>
+            <div *ngIf="hoverAddCard" class="linear-underline"></div>
+        </div>
+        
+        
+    </div>
+</div>
 <div class="buttons">
     <button class="btn btn-info" type="button" (click)="submit()">Zapisz</button>
-    <button class="btn btn-danger" type="button" (click)="cancel()" >Anuluj</button>
 </div>
 
