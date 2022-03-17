@@ -1,19 +1,39 @@
 
 
 
-    <mat-drawer-container>
-        <mat-drawer mode="side" opened>
+    <mat-drawer-container class="mat-drawer-container-bundles-list">
+        <mat-drawer class="mat-drawer-bundles-list" mode="side" opened>
             <div class="tree-header">
                 <span>Moje zasoby</span>
             </div>
             <div class="bundles-nav-section-line"></div>
-            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="folders-tree">
+            <div class="bundles-searchbar">
+                  <mat-form-field class="searched-word" appearance="fill">
+                    <input matInput
+                    #searchWord="matInput"
+                    class="content-input"
+                    placeholder="szukaj..."
+                    [formControl]="searchWordFormControl"
+                    (input)="searchExpression(searchWord.value)" 
+                    maxLength="50">
+                    <mat-icon  class="icon-prefix" matPrefix>search</mat-icon>
+                  </mat-form-field>  
+                  
+            </div>
+            <div *ngIf="!searchWord.focused" class="blank-underline" style="width: 100%;"></div>
+                  <div *ngIf="searchWord.focused" class="linear-underline-searchbar" style="width: 100%; "></div>
+                    
+            <div *ngIf="searchWord.value===''" class="new-folder-header">
+                <mat-icon>create_new_folder</mat-icon>
+                <span class="node-title">Nowy folder</span>
+            </div>
+            <mat-tree *ngIf="searchWord.value===''" [dataSource]="dataSource" [treeControl]="treeControl" class="folders-tree">
                 <!-- This is the tree node template for leaf nodes -->
                 <!-- There is inline padding applied to this node using styles.
                   This padding value depends on the mat-icon-button width. -->
-                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                <mat-tree-node class="mat-tree-node-bundle-list" *matTreeNodeDef="let node" matTreeNodeToggle>
                     <div class="mat-tree-node-content">
-                        <mat-icon>library_books</mat-icon>
+                        <mat-icon class="mat-tree-node-icon">library_books</mat-icon>
                         <span class="node-title">{{node.name}} </span>
                     </div>
                      
@@ -42,6 +62,23 @@
                   </div>
                 </mat-nested-tree-node>
               </mat-tree>
+              <div *ngIf="searchWord.value!==''" class="search-container">
+                <div class="search-title-container">
+                    <span class="search-title">Wyniki wyszukiwania:</span>
+                </div>
+                <mat-list class="list-of-folders" role="list" *ngFor="let f of searched_folders">
+                    <div class="list-line">
+                        <mat-icon class="node-title-icon">folder</mat-icon>
+                        <mat-list-item 
+                            class="list-item" 
+                            role="listitem">
+                            
+                            <mark> {{f.name||highlight: searchWord.value }} </mark> 
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+            </div>
+
         </mat-drawer>
         <mat-drawer-content>
             <div class="bundles-container"> 

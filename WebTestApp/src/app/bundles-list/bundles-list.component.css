@@ -5,10 +5,9 @@
     align-items: center;
     flex-direction: column;
     overflow: hidden;
-    
 }
 .bundles-nav{
-    width: 80%;
+    width: 90%;
     height:20px;
     color: rgba( 255, 255, 255, 0.5 );
     margin-top: 3em;
@@ -43,7 +42,7 @@
 }
 
 .list{
-    width: 80%;
+    width: 90%;
     height: 100%;
 }
 .bundle-header{
@@ -87,20 +86,15 @@
     justify-content: space-between;
 }
 
-mat-drawer-container, mat-drawer{
-    background-color: rgba( 255, 255, 255, 0.0 );
-    
-}
-
-mat-drawer-container{
+.mat-drawer-container-bundles-list{
     margin-top: 0;
     height: 100%;
     min-height: 100vh;
     z-index: 0;
 }
 
-mat-drawer{
-    background: rgba( 56, 56, 56, 0.65 );
+.mat-drawer-bundles-list{
+    background: rgba( 56, 56, 56, 0.65 ) !important;
     backdrop-filter: blur( 4.5px );
     -webkit-backdrop-filter: blur( 4.5px );
     width: 20em;
@@ -109,6 +103,7 @@ mat-drawer{
     position: fixed;
 }
 
+
 .tree-header{
     height: 60px;
     width: 100%;
@@ -116,10 +111,27 @@ mat-drawer{
     align-items: center;
     justify-content: center;
     color: white;
+    font-size: large;
+}
+
+.new-folder-header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1.7em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    color: #17a2b8;
+    cursor: pointer;
+}
+
+.new-folder-header:hover{
+    background: rgba(107, 107, 107, 0.65);
 }
 
 .folders-tree{
-    margin-top: 2em;
+    margin-top: 1em;
     background-color: rgba( 255, 255, 255, 0.0 );
     
 }
@@ -134,9 +146,7 @@ mat-drawer{
     list-style-type: none;
   }
   
-  /*
-   * This padding sets alignment of the nested nodes.
-   */
+
   .folders-tree .mat-nested-tree-node div[role=group] {
     padding-left: 40px;
   }
@@ -160,17 +170,113 @@ mat-drawer{
     display: flex;
     flex-direction: row;
     cursor: pointer;
-    color: white;
+    color: rgba( 255, 255, 255, 0.5 );
  }
 
- mat-nested-tree-node{
-     padding-left: 0;
+ .mat-tree-node-icon{
+    font-size: 20px;
+    color: rgba( 255, 255, 255, 0.9 );
  }
- mat-tree-node{
-     min-height: 32px;
+
+ 
+
+ .mat-tree-node-bundle-list{
+    min-height: 32px;
  }
- mat-tree-node:hover  {
+ .mat-tree-node-bundle-list:hover  {
     cursor: pointer;
      color: #724dcf;
      background: rgba(107, 107, 107, 0.65);
  }
+
+
+
+ .bundles-searchbar{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width:100%;
+    height: 40px;
+ }
+ ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex{
+     padding-top: 0 !important;
+ }
+
+ ::ng-deep .mat-form-field-infix{
+
+   border-top: none !important;
+}
+
+ .content-input{
+     height: 32px;
+     top: 0.1em;
+ }
+
+ .content-input::placeholder{
+    color: rgba( 255, 255, 255, 0.5 );
+ }
+ .linear-underline-searchbar {
+    width: 100%;
+    height: 1px;
+    background-image:  linear-gradient(to right,#FF00C1,#4900FF);
+}
+
+.blank-underline {
+    width: 100%;
+    height: 1px;
+    background-color:  white;
+}
+
+
+.searched-word{ 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    color: white ;
+}
+.icon-prefix{
+    height: 32px;
+    margin-top: 0%;
+    padding-top: -15px;
+}
+::ng-deep .mat-form-field-underline{
+    display: none;
+}
+
+.list-item{
+    color: white;
+    height: 28px !important;
+    width: 80%;
+    font-size: 14px;
+    margin-top: 3px !important;
+    margin-bottom:-1em !important ;
+    margin-left: -0.75em !important;
+}
+.list-line:hover{
+    background: rgba(107, 107, 107, 0.65);
+    cursor: pointer;
+}
+
+.list-of-folders{
+    color: white;
+    padding: 0% !important;
+}
+
+.search-container{
+    margin-top: 1em;
+}
+.list-line{
+    display: flex;
+    flex-direction: row;
+    padding-left: 1.73em;
+}
+
+.search-title{
+    color: rgba( 255, 255, 255, 0.5 );
+}
+.search-title-container{
+    padding-left: 1em;
+    padding-bottom: 1.27em;
+}

@@ -1,6 +1,9 @@
+import { Observable } from "rxjs";
+
 export interface FolderNode {
-  name: string;
+  name?: string;
   children?: FolderNode[];
+  folderId?: number;
   bundleId?: number;
 }
 
@@ -38,3 +41,32 @@ export const FOLDER_DATA: FolderNode[] = [
     ],
   },
 ];
+
+export const SEARCHED_FOLDER_DATA: FolderNode[] = [
+  {
+    name: 'Folder 1',
+    folderId: 1
+  },
+  {
+    name: 'Folder 2',
+    folderId: 2
+  },
+  {
+    name: 'Folder 3',
+    folderId: 3
+  },
+  {
+    name: 'Folder 4',
+    folderId: 4
+  },
+  {
+    name: 'Folder 5',
+    folderId: 5
+  }
+];
+
+ export function searchFolder(term: string): FolderNode[] {
+  return FOLDER_DATA.filter( f=>{
+    return f.name?.includes(term);
+  })
+}

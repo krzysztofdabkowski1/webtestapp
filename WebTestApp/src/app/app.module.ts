@@ -24,6 +24,8 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatListModule} from '@angular/material/list';
+import { HighlightSearchPipe } from './highlight-search.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import {MatTreeModule} from '@angular/material/tree';
     CreateCardComponent,
     CreateBundleComponent,
     CreateBundleDetailsComponent,
-    BundlesListComponent
+    BundlesListComponent,
+    HighlightSearchPipe
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import {MatTreeModule} from '@angular/material/tree';
     MatInputModule,
     MatSidenavModule,
     MatTreeModule,
+    MatListModule
     
   ],
   providers: [],

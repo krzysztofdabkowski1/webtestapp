@@ -31,7 +31,7 @@
               class="content-input"
               [formControl]="foreignWordFormControl"
               [errorStateMatcher]="matcher"
-              (input)="detectForeignWordChange(nativeWord.value)" 
+              (input)="detectForeignWordChange(foreignWord.value)" 
               maxLength="50">
               <mat-error *ngIf="foreignWordFormControl.hasError('required')">
                 To pole jest <strong>wymagane</strong>

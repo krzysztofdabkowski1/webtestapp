@@ -306,7 +306,7 @@
 
 .blank-underline{
     border-bottom: solid 1px white;
-    margin:0px;
+
     height: 1px;
     width: 100%;
 }
@@ -331,11 +331,8 @@
     color: rgba(255, 255, 255, 0.15) ;
 }
 
-::ng-deep .mat-form-field{
-    margin-bottom: 0;
-}
 
-::ng-deep .mat-form-field-wrapper{
+.create-card-container > .mat-form-field-wrapper{
     padding-top: 0;
 }
 

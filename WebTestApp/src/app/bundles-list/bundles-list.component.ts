@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { Bundle } from '../shared/bundle.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import { FolderNode, FOLDER_DATA } from './folder-node';
+import { FolderNode, FOLDER_DATA, SEARCHED_FOLDER_DATA, searchFolder } from './folder-node';
 import { CardDetailsService } from '../shared/card-details.service';
+import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'bundles-list',
@@ -15,7 +17,11 @@ export class BundlesListComponent implements OnInit {
 
   bundles!:Bundle[] ;
   treeControl = new NestedTreeControl<FolderNode>(node => node.children);
+  searchWordFormControl = new FormControl('', [ Validators.maxLength(100)]);
   dataSource = new MatTreeNestedDataSource<FolderNode>();
+  private searchedWordSubject = new Subject<string>();
+  DEBOUNCE_TIME:number = 300;
+  searched_folders: FolderNode[] = [];
 
   constructor(private router: Router,
               private dataService: CardDetailsService){
@@ -23,11 +29,20 @@ export class BundlesListComponent implements OnInit {
    }
 
    hasChild = (_: number, node: FolderNode) => !!node.children && node.children.length > 0;
+   hasBundleId = (_: number, node: FolderNode) => node.bundleId !== undefined;
 
   ngOnInit(): void {
     this.dataService.getBundles().subscribe( (bundles) => {
       this.bundles = bundles;
-    } )
+    } );
+
+    this.searchedWordSubject.pipe(
+      debounceTime(this.DEBOUNCE_TIME),
+      distinctUntilChanged())
+      .subscribe((expr: string)=>{
+        console.log(searchFolder(expr))
+        this.searched_folders = searchFolder(expr);
+  });
   }
   getDate(bundle: Bundle){
     if(bundle.updateDate === undefined){
@@ -77,4 +92,8 @@ export class BundlesListComponent implements OnInit {
     // so that the HeroList component can select that item.
     this.router.navigate(['/bundle', { id: 1 }]);
   }
+
+  searchExpression(expr: string){
+    this.searchedWordSubject.next(expr);
+}
 }
