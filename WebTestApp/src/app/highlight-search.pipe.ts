@@ -5,9 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HighlightSearchPipe implements PipeTransform {
 
-  transform(value: string, args: string): string {
-    if (!args) {return value;}
-    return value.replace(args, "<mark>$&</mark>");
+  transform(value: string | undefined, args: string | undefined): string {
+    if (!args) {return value!;}
+    return value!.replace(args, "<mark>$&</mark>");
 }
 
 }

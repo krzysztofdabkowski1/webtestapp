@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Bundle } from '../shared/bundle.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import { FolderNode, FOLDER_DATA, SEARCHED_FOLDER_DATA, searchFolder } from './folder-node';
+import { FolderNode, BundleNode, FOLDER_DATA,  searchFolder, searchBundle } from './folder-node';
 import { CardDetailsService } from '../shared/card-details.service';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
@@ -22,6 +22,7 @@ export class BundlesListComponent implements OnInit {
   private searchedWordSubject = new Subject<string>();
   DEBOUNCE_TIME:number = 300;
   searched_folders: FolderNode[] = [];
+  searched_bundles: BundleNode[] = [];
 
   constructor(private router: Router,
               private dataService: CardDetailsService){
@@ -42,6 +43,7 @@ export class BundlesListComponent implements OnInit {
       .subscribe((expr: string)=>{
         console.log(searchFolder(expr))
         this.searched_folders = searchFolder(expr);
+        this.searched_bundles = searchBundle(expr);
   });
   }
   getDate(bundle: Bundle){
@@ -95,5 +97,9 @@ export class BundlesListComponent implements OnInit {
 
   searchExpression(expr: string){
     this.searchedWordSubject.next(expr);
-}
+  }
+
+  toggleSideNav(){
+
+  }
 }

@@ -26,6 +26,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatListModule} from '@angular/material/list';
 import { HighlightSearchPipe } from './highlight-search.pipe';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { HighlightSearchPipe } from './highlight-search.pipe';
     MatInputModule,
     MatSidenavModule,
     MatTreeModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
     
   ],
   providers: [],
