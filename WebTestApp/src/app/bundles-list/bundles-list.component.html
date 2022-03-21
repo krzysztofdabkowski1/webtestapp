@@ -2,7 +2,7 @@
 
 
     <mat-drawer-container class="mat-drawer-container-bundles-list">
-        <mat-drawer #drawer class="mat-drawer-bundles-list" mode="side" opened>
+        <mat-drawer #drawer class="mat-drawer-bundles-list" mode="side" (mouseover)="drawerHovered=true" (mouseout)="drawerHovered=false" opened>
             
             <div class="side-container">
                 <div class="tree-header">
@@ -86,17 +86,18 @@
                     </mat-list>
                 </div>
             </div>
-            <div class="side-button-container l-94">
+
+            <div [style.visibility]="drawerHovered ? 'visible' : 'hidden'" (mouseover)="drawerHovered=true" class="side-button-container ">
                 <button class="expand-button" mat-mini-fab aria-label="Example icon button with a heart icon" (click)="drawer.toggle()"> 
                   <mat-icon>
                     chevron_left
                   </mat-icon>
                 </button>
             </div>
-
         </mat-drawer>
+        
         <mat-drawer-content>
-            <div *ngIf="!drawer.opened" class="side-button-container opacity-animation">
+            <div *ngIf="!drawer.opened" class="side-button-container-right opacity-animation">
                 <button class="expand-button" mat-mini-fab aria-label="Example icon button with a heart icon" (click)="drawer.toggle()"> 
                   <mat-icon>
                     chevron_right
@@ -115,7 +116,7 @@
                     <div class="bundle-header">
                         <h2 class="title">{{b.name}} <span class="number-of-cards">/catalog</span></h2>
                         <div class="details">
-                            <span class="number-of-cards"> {{b.cards.length}} karty </span>
+                            <span class="number-of-cards"> {{b.cardsQuantity}} karty </span>
                             <span class="date">{{getDate(b)}}</span>
                         </div>
                     

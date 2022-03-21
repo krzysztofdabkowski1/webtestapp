@@ -10,7 +10,9 @@ import { Bundle, EmptyBundle } from './bundle.model';
 export class CardDetailsService {
 
   baseUrl: string = 'http://localhost:65419/api/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+ 
+  }
 
   bundles: Bundle[] = [
     {"name": "Fiszki #1",
@@ -21,6 +23,8 @@ export class CardDetailsService {
       "nativeLang": "pl",
       "foreignLang": "gb",
       "description": " to są fiszki",
+      "isPublic": 0,
+      "cardsQuantity": 0,
       "cards":[
     {
       "id": 1,
@@ -67,11 +71,23 @@ export class CardDetailsService {
     }
   ]}];  
 
-  getCards(): Observable<CardDetails[]>{
-    let url = this.baseUrl+'CardDetails';
-    let c = this.http.get<CardDetails[]>(url);
-    c.subscribe(c => console.log("get: "+c[1].nativeExpression));
-    return c;
+  getCards(){
+    let url = this.baseUrl+'Card';
+    let c = this.http.get<{
+      "id": number,
+      "description": string,
+      "cards_quantity": number,
+      "created_at": Date,
+      "native_lang": string,
+      "foreign_lang": string,
+      "is_public": number
+    }[]>(url);
+
+    let retData = [];
+    c.subscribe( card =>{
+      console.log(card)
+    });
+
   }
 
   getLocalCards(): Observable<CardDetails[]> {
@@ -90,12 +106,22 @@ export class CardDetailsService {
   }
 
   getBundles(): Observable<Bundle[]> {
-    if(this.bundles !== []){
-      return of(this.bundles)
-    }
-    else{
-      throw 'No bundles found';
-    }   
+    let url = this.baseUrl+'Bundle';
+    let c = this.http.get<Bundle[]>(url);
+
+    c.subscribe( card => console.log(card))
+
+    return c;
+    // c.subscribe( card =>{
+    //   console.log(card)
+    // });
+
+    // if(this.bundles !== []){
+    //   return of(this.bundles)
+    // }
+    // else{
+    //   throw 'No bundles found';
+    // }   
   }
   
   getBundleById(bundleId: number): Bundle {

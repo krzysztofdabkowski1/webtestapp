@@ -11,6 +11,8 @@ export interface Bundle{
     description: string;
     nativeLang: string;
     foreignLang: string;
+    isPublic: number;
+    cardsQuantity: number;
     cards: CardDetails[];
 
 };
@@ -24,6 +26,8 @@ export class EmptyBundle implements Bundle{
     description: string = '';
     nativeLang: string = '';
     foreignLang: string = '';
+    isPublic: number = 0;
+    cardsQuantity: number = 0;
     cards: CardDetails[] = [];
     
 }

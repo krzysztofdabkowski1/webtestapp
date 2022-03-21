@@ -7,6 +7,7 @@ import { FolderNode, BundleNode, FOLDER_DATA,  searchFolder, searchBundle } from
 import { CardDetailsService } from '../shared/card-details.service';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'bundles-list',
@@ -23,9 +24,11 @@ export class BundlesListComponent implements OnInit {
   DEBOUNCE_TIME:number = 300;
   searched_folders: FolderNode[] = [];
   searched_bundles: BundleNode[] = [];
+  drawerHovered: Boolean = false;
 
   constructor(private router: Router,
-              private dataService: CardDetailsService){
+              private dataService: CardDetailsService,
+              private datePipe: DatePipe){
     this.dataSource.data = FOLDER_DATA;
    }
 
@@ -47,11 +50,13 @@ export class BundlesListComponent implements OnInit {
   });
   }
   getDate(bundle: Bundle){
+    let updated = new Date(this.datePipe.transform(bundle.updateDate, 'yyyy-MM-dd') as unknown as Date);
+    let start = new Date(this.datePipe.transform(bundle.startDate, 'yyyy-MM-dd') as unknown as Date);
     if(bundle.updateDate === undefined){
-      return 'Dodano: '+bundle.startDate.getDate()+' '+this.getMonth(bundle.startDate.getMonth())+ ' '+ bundle.startDate.getFullYear();
+      return 'Dodano: '+start.getDate()+' '+this.getMonth(start.getMonth())+ ' '+ start.getFullYear();
     }
     else{
-      return 'Aktualizowano: '+bundle.updateDate.getDate()+' '+this.getMonth(bundle.updateDate.getMonth())+ ' '+ bundle.updateDate.getFullYear();
+      return 'Aktualizowano: '+updated.getDate()+' '+ this.getMonth(updated.getMonth())+' '+ updated.getFullYear();
     
     }
 

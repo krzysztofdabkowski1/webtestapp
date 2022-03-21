@@ -108,15 +108,21 @@
 
 
 
-.l-94{
-    left: 94%;
-}
-
 .side-button-container{
     position: absolute;
-    top: 25px;
-    z-index: 1;
-    
+    top: 4em;
+    right: -0.9em;
+}
+
+
+.side-button-container-right{
+    position: fixed;
+    top: 8.35em;
+    left: -0.9em;
+    z-index: 5;
+}
+.mat-drawer-content{
+    overflow:visible;
 }
 
 
@@ -310,7 +316,7 @@
 
 .opacity-animation{
     animation-name: appear;
-    animation-duration: 0.9s;
+    animation-duration: 0.4s;
 }
 
 @keyframes appear {

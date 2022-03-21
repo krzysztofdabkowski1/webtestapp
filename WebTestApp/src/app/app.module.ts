@@ -27,6 +27,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatListModule} from '@angular/material/list';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import {MatButtonModule} from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
