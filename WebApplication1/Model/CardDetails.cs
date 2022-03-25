@@ -10,18 +10,16 @@ namespace TestWebAPI.Model
     public class CardDetails
     {
         [Key]
-        public int CardDetailsID { get; set; }
+        public int id { get; set; }
+
+        [Column(TypeName = "int")]
+        public int bundleId { get; set; }
 
         [Column(TypeName="nvarchar(100)")]
-        public string NativeExpression { get; set; }
+        public string nativeExpression { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
-        public string ForeignExpression { get; set; }
+        public string foreignExpression { get; set; }
 
-        [Column(TypeName = "int")]
-        public int NativeLangID { get; set; }
-
-        [Column(TypeName = "int")]
-        public int ForeignLangID { get; set; }
     }
 }

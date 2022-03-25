@@ -1,8 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>608cf587-c440-404f-a9fb-3b2723dfe2c4</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\CardDetailsController.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CodesnippetPackage" Version="1.0.0" />

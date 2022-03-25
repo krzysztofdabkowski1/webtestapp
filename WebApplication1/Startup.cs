@@ -35,6 +35,8 @@ namespace WebApplication1
             });
 
             services.AddCors();
+            services.AddDbContext<BundleContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
             services.AddDbContext<CardDetailsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
         }
