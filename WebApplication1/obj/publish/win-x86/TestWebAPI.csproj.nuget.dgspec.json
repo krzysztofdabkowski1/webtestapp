@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\Desktop\\workspace\\webtestapp\\WebApplication1\\TestWebAPI.csproj": {}
+    "C:\\Users\\krzys\\OneDrive\\Pulpit\\workspace\\webtestapp\\webtestapp\\WebApplication1\\TestWebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Asus\\Desktop\\workspace\\webtestapp\\WebApplication1\\TestWebAPI.csproj": {
+    "C:\\Users\\krzys\\OneDrive\\Pulpit\\workspace\\webtestapp\\webtestapp\\WebApplication1\\TestWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\Desktop\\workspace\\webtestapp\\WebApplication1\\TestWebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\krzys\\OneDrive\\Pulpit\\workspace\\webtestapp\\webtestapp\\WebApplication1\\TestWebAPI.csproj",
         "projectName": "TestWebAPI",
-        "projectPath": "C:\\Users\\Asus\\Desktop\\workspace\\webtestapp\\WebApplication1\\TestWebAPI.csproj",
-        "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\Desktop\\workspace\\webtestapp\\WebApplication1\\obj\\publish\\win-x86\\",
+        "projectPath": "C:\\Users\\krzys\\OneDrive\\Pulpit\\workspace\\webtestapp\\webtestapp\\WebApplication1\\TestWebAPI.csproj",
+        "packagesPath": "C:\\Users\\krzys\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\krzys\\OneDrive\\Pulpit\\workspace\\webtestapp\\webtestapp\\WebApplication1\\obj\\publish\\win-x86\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\krzys\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -89,15 +88,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
-              "version": "[5.0.2, 5.0.2]"
+              "version": "[5.0.13, 5.0.13]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.win-x86",
-              "version": "[5.0.2, 5.0.2]"
+              "version": "[5.0.13, 5.0.13]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Runtime.win-x86",
-              "version": "[5.0.2, 5.0.2]"
+              "version": "[5.0.13, 5.0.13]"
             }
           ],
           "frameworkReferences": {
@@ -108,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

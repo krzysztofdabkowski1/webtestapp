@@ -5,7 +5,7 @@ import { MatLine } from '@angular/material/core';
 import { HasElementRef } from '@angular/material/core/common-behaviors/color';
 import { Bundle } from '../shared/bundle.model';
 import { CardDetails } from '../shared/card-details.model';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 
 @Component({
   selector: 'edit-examples',
@@ -43,7 +43,7 @@ export class EditExamplesComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: CardDetailsService
+    private dataService: DataService
   ) { }
 
 

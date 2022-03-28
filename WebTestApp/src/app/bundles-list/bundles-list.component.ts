@@ -4,10 +4,11 @@ import { Bundle } from '../shared/bundle.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import { FolderNode, BundleNode, FOLDER_DATA,  searchFolder, searchBundle } from './folder-node';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { MatDrawerMode } from '@angular/material/sidenav';
 
 @Component({
   selector: 'bundles-list',
@@ -25,9 +26,10 @@ export class BundlesListComponent implements OnInit {
   searched_folders: FolderNode[] = [];
   searched_bundles: BundleNode[] = [];
   drawerHovered: Boolean = false;
+  drawerMode: MatDrawerMode = "side";
 
   constructor(private router: Router,
-              private dataService: CardDetailsService,
+              private dataService: DataService,
               private datePipe: DatePipe){
     this.dataSource.data = FOLDER_DATA;
    }
@@ -36,6 +38,17 @@ export class BundlesListComponent implements OnInit {
    hasBundleId = (_: number, node: FolderNode) => node.bundleId !== undefined;
 
   ngOnInit(): void {
+    window.addEventListener('resize', () => {
+      console.log(window.innerWidth);
+        if(window.innerWidth < 800 ){
+          this.drawerMode = "over";
+        }
+        else{
+          this.drawerMode = "side";
+        }
+    })
+    
+
     this.dataService.getBundles().subscribe( (bundles) => {
       this.bundles = bundles;
     } );

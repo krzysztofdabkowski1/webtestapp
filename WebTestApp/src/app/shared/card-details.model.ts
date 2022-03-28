@@ -1,5 +1,3 @@
-import { CardDetailsService } from "./card-details.service";
-
 
 export interface CardDetails{
     id: number ;

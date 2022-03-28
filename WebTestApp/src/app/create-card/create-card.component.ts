@@ -4,7 +4,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 import { CardSubject } from './card-subject';
 
 /** Error when invalid control is dirty, touched, or submitted. */

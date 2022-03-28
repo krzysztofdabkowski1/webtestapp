@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { isTemplateExpression } from 'typescript';
 import { FormBuilder } from '@angular/forms';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 import { CardDetails } from '../shared/card-details.model';
 import { Bundle } from '../shared/bundle.model';
 
@@ -35,7 +35,7 @@ export class EditDescriptionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: CardDetailsService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {

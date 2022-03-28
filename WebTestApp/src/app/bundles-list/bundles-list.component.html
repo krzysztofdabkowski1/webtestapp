@@ -2,7 +2,7 @@
 
 
     <mat-drawer-container class="mat-drawer-container-bundles-list">
-        <mat-drawer #drawer class="mat-drawer-bundles-list" mode="side" (mouseover)="drawerHovered=true" (mouseout)="drawerHovered=false" opened>
+        <mat-drawer #drawer class="mat-drawer-bundles-list" [mode]="drawerMode" (mouseover)="drawerHovered=true" (mouseout)="drawerHovered=false" opened>
             
             <div class="side-container">
                 <div class="tree-header">

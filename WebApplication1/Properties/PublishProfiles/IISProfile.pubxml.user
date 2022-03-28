@@ -7,6 +7,7 @@ Ten plik jest wykorzystywany przez proces publikowania/pakowania projektu intern
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword />
+    <History>True|2022-03-26T01:22:26.3163262Z;True|2022-03-26T01:20:34.6162532+01:00;True|2022-03-26T01:15:55.9703130+01:00;True|2022-03-26T01:12:51.1723970+01:00;True|2022-03-26T01:10:36.7991313+01:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="DevConnection">

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Bundle, EmptyBundle } from './bundle.model';
 import { CardDetails, Card } from './card-details.model';
-import { CardDetailsService } from './card-details.service';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { CardDetailsService } from './card-details.service';
 export class BundleCollectorService {
 
   bundle!: Bundle;
-  constructor(private dataService: CardDetailsService) { 
+  constructor(private dataService: DataService) { 
     this.bundle = new EmptyBundle();
     this.bundle.bundleID = this.dataService.getNewBundleId();
   }

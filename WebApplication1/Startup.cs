@@ -45,7 +45,7 @@ namespace WebApplication1
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
+            options.WithOrigins("http://fcmanager.pl")
             .AllowAnyMethod()
             .AllowAnyHeader());
             if (env.IsDevelopment())

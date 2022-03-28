@@ -7,9 +7,9 @@ import { Bundle, EmptyBundle } from './bundle.model';
 @Injectable({
   providedIn: 'root'
 })
-export class CardDetailsService {
+export class DataService {
 
-  baseUrl: string = 'http://localhost:65419/api/';
+  baseUrl: string = 'http://api.fcmanager.pl/api/';
   constructor(private http: HttpClient) { 
  
   }

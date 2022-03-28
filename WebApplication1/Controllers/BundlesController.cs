@@ -28,18 +28,18 @@ namespace TestWebAPI.Controllers
             return _context.Bundle.ToList();
         }
 
-        // GET: api/CardDeatils/5
+        // GET: api/Bundle/5
         [HttpGet("{id}")]
-        public ActionResult<List<CardDetails>> GetCards(int bundleId)
+        public ActionResult<Bundle> GetBundle(int bundleId)
         {
-            var cardDetails = _context.Card.ToList().Where(c => c.bundleId == bundleId).ToList();
+            Bundle bundle = (Bundle) _context.Bundle.ToList().Where(c => c.bundleID == bundleId);
     
-            if (cardDetails == null)
+            if (bundle == null)
             {
                 return NotFound();
             }
 
-            return cardDetails;
+            return bundle;
         }
 
         // PUT: api/CardDeatils/5

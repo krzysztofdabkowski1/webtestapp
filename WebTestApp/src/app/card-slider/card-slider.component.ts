@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardDetails } from '../shared/card-details.model';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 import {MatIconModule} from '@angular/material/icon';
 import { EditDescriptionComponent } from '../edit-description/edit-description.component';
 import { Bundle } from '../shared/bundle.model';
@@ -48,7 +48,7 @@ export class CardSliderComponent implements OnInit {
   
   
 
-  constructor(private dataService: CardDetailsService,
+  constructor(private dataService: DataService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {

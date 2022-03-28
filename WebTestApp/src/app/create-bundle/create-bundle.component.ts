@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CreateCardComponent } from '../create-card/create-card.component';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
-import { CardDetailsService } from '../shared/card-details.service';
+import { DataService } from '../shared/data.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { BundleValidator } from './bundle-validator';
 import { Subject } from 'rxjs';
@@ -24,7 +24,7 @@ export class CreateBundleComponent implements OnInit {
   bundle:CardDetails[] = [];
 
   constructor(
-    private dataService: CardDetailsService,
+    private dataService: DataService,
     private bundleCollector: BundleCollectorService,
     private router: Router,
     private snackBar: MatSnackBar
