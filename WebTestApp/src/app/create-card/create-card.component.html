@@ -50,8 +50,8 @@
                 <mat-icon *ngIf="areNotesOpen" class="editBtn" (click)="showCardDescription()">keyboard_arrow_up</mat-icon>
             </div>
         </div>
-        <div class="cardDescription" [ngClass]="areNotesOpen ? 'showCardDescription' : ' showCardDescription hideCardDescription' ">
-            
+        <div class="cardDescription" [ngClass]="areNotesOpen ? 'showCardDescription' : (preventAnimation? '': 'showCardDescription hideCardDescription') ">
+
           <div class='description'>
             <mat-form-field class="descriptionContent" appearance="fill">
               <mat-label class="label">Opis</mat-label>

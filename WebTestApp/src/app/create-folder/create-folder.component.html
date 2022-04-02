@@ -1,0 +1,30 @@
+<div class="create-folder-container">
+    <h2 class="folder-heading">Dodaj folder</h2>
+    <mat-form-field class="folder-name" appearance="fill">
+        <mat-label class="label">Nazwa folderu</mat-label>
+        <input matInput
+        #folderName="matInput"
+        [formControl]="nameFormControl"
+        [errorStateMatcher]="matcher"
+        (input)="inputFolderNameChange(folderName.value)"  
+        maxLength="50"
+
+        class="folder-name-input">
+        <mat-error *ngIf="!isNameAllowed">
+          Nazwa jest już zajęta
+        </mat-error>
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+          Pole nie może być puste
+        </mat-error>
+
+      <div *ngIf="!folderName.focused" class="blank-underline" style="width: 100%;"></div>
+      <div *ngIf="folderName.focused" class="linear-underline" style="width: 100%; "></div>
+    </mat-form-field>
+    <div class="buttons">
+        <button mat-dialog-close 
+        class="btn" 
+        [disabled]="!isNameAllowed"
+        [ngClass]="isNameAllowed && folderName.value ? ' btn-info' : ' btn-secondary'"
+        (click)="addFolder()">Dodaj</button>
+    </div>
+</div>

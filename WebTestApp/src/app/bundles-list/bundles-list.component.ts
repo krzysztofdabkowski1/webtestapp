@@ -3,12 +3,15 @@ import { Router } from '@angular/router';
 import { Bundle } from '../shared/bundle.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import { FolderNode, BundleNode, FOLDER_DATA,  searchFolder, searchBundle } from './folder-node';
 import { DataService } from '../shared/data.service';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { MatDrawerMode } from '@angular/material/sidenav';
+import {MatDialog} from '@angular/material/dialog';
+import { CreateFolderComponent } from '../create-folder/create-folder.component';
+import { FolderNode } from '../shared/folder-node.model';
+import { BundleNode } from '../shared/bundle-node.model';
 
 @Component({
   selector: 'bundles-list',
@@ -30,11 +33,15 @@ export class BundlesListComponent implements OnInit {
 
   constructor(private router: Router,
               private dataService: DataService,
-              private datePipe: DatePipe){
-    this.dataSource.data = FOLDER_DATA;
+              private datePipe: DatePipe,
+              public dialog: MatDialog){
+      this.dataService.getFolders().subscribe( (folders) => {
+        this.dataSource.data = folders;
+      })
+            
    }
 
-   hasChild = (_: number, node: FolderNode) => !!node.children && node.children.length > 0;
+   hasfolderId = (_: number, node: FolderNode) => node.folderId != undefined;
    hasBundleId = (_: number, node: FolderNode) => node.bundleId !== undefined;
 
   ngOnInit(): void {
@@ -57,9 +64,9 @@ export class BundlesListComponent implements OnInit {
       debounceTime(this.DEBOUNCE_TIME),
       distinctUntilChanged())
       .subscribe((expr: string)=>{
-        console.log(searchFolder(expr))
-        this.searched_folders = searchFolder(expr);
-        this.searched_bundles = searchBundle(expr);
+        console.log(this.dataService.searchFolder(expr))
+        this.searched_folders = this.dataService.searchFolder(expr);
+        this.searched_bundles = this.dataService.searchBundle(expr);
   });
   }
   getDate(bundle: Bundle){
@@ -119,5 +126,15 @@ export class BundlesListComponent implements OnInit {
 
   toggleSideNav(){
 
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateFolderComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.dataService.getFolders().subscribe( (folders) => {
+        this.dataSource.data = folders;
+      })
+    });
   }
 }

@@ -1,3 +1,10 @@
+
+@keyframes appear{
+    from {opacity : 0;}
+    to {opacity: 1;}
+}
+
+
 .create-container{
     width: 100%;
     height: auto;

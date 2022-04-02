@@ -1,0 +1,47 @@
+::ng-deep.mat-dialog-container{
+    width: 100% ;
+    height: 100% ;
+    background: rgba( 56, 56, 56, 0.65 );
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
+    padding-bottom: 0%;
+}
+.folder-name{
+    width: 100%;
+}
+.create-folder-container{
+    width: 300px;
+    height: 160px;
+}
+
+.label, .folder-name-input::placeholder{
+    color: rgba(255, 255, 255, 0.35) ;
+}
+.folder-name-input{
+    color: white;
+    padding: 0% !important;
+}
+
+.folder-heading{
+    color: rgba(255, 255, 255, 0.65) ;
+    display: flex;
+    justify-content: center;
+}
+.blank-underline{
+    border-bottom: solid 1px white;
+
+    height: 1px;
+    width: 100%;
+}
+.linear-underline {
+    width: 80%;
+    height: 1px;
+    background-image:  linear-gradient(to right,#FF00C1,#4900FF)
+}
+
+.buttons{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 4%;
+}

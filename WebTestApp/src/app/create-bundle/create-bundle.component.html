@@ -1,4 +1,5 @@
-<create-bundle-details
+<div class="app-create-bundle-container">
+    <create-bundle-details
     [validate]="validate">
 </create-bundle-details>
 <div class="create-container" *ngFor="let b of bundleCardsID">
@@ -31,5 +32,8 @@
 </div>
 <div class="buttons">
     <button class="btn btn-info" type="button" (click)="submit()">Zapisz</button>
+</div>
+
+
 </div>
 

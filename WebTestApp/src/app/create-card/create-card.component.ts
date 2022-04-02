@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { textChangeRangeIsUnchanged } from 'typescript';
 import { BundleCollectorService } from '../shared/bundle-collector.service';
 import { CardDetails } from '../shared/card-details.model';
 import { DataService } from '../shared/data.service';
@@ -36,6 +37,7 @@ export class CreateCardComponent implements OnInit {
   descriptionFormControl = new FormControl('', [ Validators.maxLength(500)]);
   exampleFormControl = new FormControl('',[ Validators.maxLength(150)])
   matcher = new MyErrorStateMatcher();
+  preventAnimation: Boolean = true;
 
   @Input() numberOfCard: number | undefined;
   @Input() displayNumberOfCard: number | undefined;
@@ -70,23 +72,26 @@ export class CreateCardComponent implements OnInit {
     const descriptionTextArea = document.querySelectorAll('#description-textarea') as unknown as HTMLTextAreaElement[]
     const descriptionP = document.querySelectorAll('#description-p') as unknown as HTMLElement[];
     const exampleTextArea = document.querySelectorAll('#example-textarea') as unknown as HTMLTextAreaElement[];
-    const exampleP = document.querySelectorAll('#example-p') as unknown as HTMLElement[];
+    
+    
+    const cardDescription = document.querySelector('.cardDescription') as HTMLDivElement;
 
+  
     if(this.numberOfCard && this.displayNumberOfCard){
 
 
     
 
-    descriptionTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
-      if(this.displayNumberOfCard){
-      if(descriptionTextArea[this.displayNumberOfCard-1].value.length!==0){
-        descriptionP[this.displayNumberOfCard-1].style.visibility = "visible";
-      }
-      else{
-        descriptionP[this.displayNumberOfCard-1].style.visibility = "hidden";
-      }
-    }
-    });
+    // descriptionTextArea[this.displayNumberOfCard-1].addEventListener('input', ()=>{
+    //   if(this.displayNumberOfCard){
+    //   if(descriptionTextArea[this.displayNumberOfCard-1].value.length!==0){
+    //     descriptionP[this.displayNumberOfCard-1].style.visibility = "visible";
+    //   }
+    //   else{
+    //     descriptionP[this.displayNumberOfCard-1].style.visibility = "hidden";
+    //   }
+    // }
+    // });
 
   }
   }
@@ -119,6 +124,9 @@ export class CreateCardComponent implements OnInit {
     this.deleteThisCardEvent.emit(true);
   }
   showCardDescription(){
+    if(this.preventAnimation){
+      this.preventAnimation = false;
+    }
     this.areNotesOpen = !this.areNotesOpen;
   }
 
@@ -128,8 +136,7 @@ export class CreateCardComponent implements OnInit {
   }
 
   saveEdit(index: number){
-      this.examples[index] = this.exampleFormControl.value;
-    
+    this.examples[index] = this.exampleFormControl.value;
     this.exampleFormControl.setValue('');
     this.exampleIndex = undefined;
     this.changedExamples();

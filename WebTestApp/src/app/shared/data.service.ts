@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { CardDetails } from './card-details.model';
 import { Observable, of } from 'rxjs';
 import { Bundle, EmptyBundle } from './bundle.model';
+import { FolderNode } from './folder-node.model';
+import { BundleNode } from './bundle-node.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  baseUrl: string = 'http://api.fcmanager.pl/api/';
+  static baseUrl: string = 'http://api.fcmanager.pl/api/';
+  
   constructor(private http: HttpClient) { 
  
   }
@@ -71,8 +74,88 @@ export class DataService {
     }
   ]}];  
 
+  
+  FOLDER_DATA: FolderNode[] = [
+    {
+      name: 'Folder 1',
+      folderId: 1,
+      children: [
+        {name: 'Fiszki long long long longer title example #1', bundleId: 1},
+        {name: 'Fiszki #2', bundleId: 2},
+        {name: 'Fiszki #3', bundleId: 3}
+      ],
+    },
+    {
+      name: 'Folder 2',
+      folderId: 2,
+      children: [
+        {name: 'Fiszki long long long longer title example #1', bundleId: 1},
+        {name: 'Fiszki #2', bundleId: 2},
+        {name: 'Fiszki #3', bundleId: 3}
+      ],
+    },
+    {
+      name: 'Folder 3 long long very long folder name',
+      folderId: 3,
+      children: [
+        {name: 'Fiszki long long long longer title example #1', bundleId: 1},
+        {name: 'Fiszki #2', bundleId: 2},
+        {name: 'Fiszki #3', bundleId: 3}
+      ],
+    },
+    {
+      name: 'Folder 4',
+      folderId: 4,
+      children: [
+        {name: 'Fiszki long long long longer title example #1', bundleId: 1},
+        {name: 'Fiszki #2', bundleId: 2},
+        {name: 'Fiszki #3', bundleId: 3}
+      ],
+    },
+  ];
+
+  getFolders(): Observable<FolderNode[]>{
+    const folders = this.FOLDER_DATA;
+    return of(folders);
+  }
+  searchFolder(term: string): FolderNode[] {
+    return this.FOLDER_DATA.filter( f=>{
+      return f.name?.includes(term);
+    })
+  }
+  searchBundle(term: string): BundleNode[] {
+    let bundleNodeList: BundleNode[] = [];
+    this.FOLDER_DATA.forEach( f =>{
+      f.children?.forEach( c =>{
+        bundleNodeList.push({
+          "name": c.name,
+          "folderName": f.name,
+          "bundleId": c.bundleId
+        })
+      })
+    })
+    return bundleNodeList.filter( f=>{
+      return f.name?.includes(term);
+    })
+  }
+
+  addFolder(folder: FolderNode){
+    folder.folderId = 0;
+    this.FOLDER_DATA.push(folder);
+  }
+
+  isFolderNameAllowed(name: string): boolean{
+    let isNameAllowed: FolderNode | undefined = this.FOLDER_DATA.find( f => f.name == name);
+    if(isNameAllowed == undefined){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   getCards(){
-    let url = this.baseUrl+'Card';
+    let url = DataService.baseUrl+'Card';
     let c = this.http.get<{
       "id": number,
       "description": string,
@@ -106,22 +189,12 @@ export class DataService {
   }
 
   getBundles(): Observable<Bundle[]> {
-    let url = this.baseUrl+'Bundle';
+    let url = DataService.baseUrl+'Bundle';
     let c = this.http.get<Bundle[]>(url);
 
     c.subscribe( card => console.log(card))
 
-    return c;
-    // c.subscribe( card =>{
-    //   console.log(card)
-    // });
-
-    // if(this.bundles !== []){
-    //   return of(this.bundles)
-    // }
-    // else{
-    //   throw 'No bundles found';
-    // }   
+    return c;  
   }
   
   getBundleById(bundleId: number): Bundle {

@@ -25,7 +25,7 @@
                 <div *ngIf="!searchWord.focused" class="blank-underline" style="width: 100%;"></div>
                       <div *ngIf="searchWord.focused" class="linear-underline-searchbar" style="width: 100%; "></div>
                         
-                <div *ngIf="searchWord.value===''" class="new-folder-header">
+                <div *ngIf="searchWord.value===''" class="new-folder-header" (click)="openDialog()">
                     <mat-icon>create_new_folder</mat-icon>
                     <span class="node-title">Nowy folder</span>
                 </div>
@@ -37,7 +37,7 @@
                         </div>
                          
                     </mat-tree-node>
-                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasfolderId">
                         
                           <mat-flat-button mat-icon-button matTreeNodeToggle
                                   [attr.aria-label]="'Toggle ' + node.name">

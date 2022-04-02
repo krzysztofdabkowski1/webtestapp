@@ -125,6 +125,15 @@
     height: auto;
 }
 
+.no-animations {
+    animation: none !important;
+    transition: none !important;
+	-webkit-transition: none !important;
+	-moz-transition: none !important;
+	-ms-transition: none !important;
+	-o-transition: none !important;
+}
+
 .showCardDescription {
     display: flex;
     animation-name: uncoverDesc;
@@ -154,7 +163,7 @@
     }
     100% {    
         top: 0;
-        height: 350px;
+        height: 270px;
     }
 }
 
@@ -162,7 +171,7 @@
     0% {    
         display: flex;
         top: -55px;
-        height: 350px;
+        height: 270px;
     }
     100% {    
         top: -80px;
@@ -315,9 +324,6 @@
     color: #4900FF;
  }
 
- ::ng-deep .mat-form-field{
-     background-color: rgba(0, 0, 0, 0.0);
- }
 
  .label {
     color: rgba(255, 255, 255, 0.35) ;
